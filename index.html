@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>ATW - Amateur Trampoline Wrestling</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+    body {
+      font-family: 'Oswald', Arial, sans-serif;
+      margin: 0;
+      background: #111;
+      color: #fff;
+      letter-spacing: 0.5px;
+    }
+    
+    /* HERO / ACCUEIL */
+    #accueil {
+      height: 100vh;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      background: radial-gradient(circle, #2a0000 0%, #111 80%);
+      padding: 40px 20px;
+      border-bottom: 3px solid #ff0000;
+    }
+    .hero-logo {
+      max-width: 150px;
+      width: 80%;
+      height: auto;
+      margin-bottom: 15px;
+      filter: drop-shadow(0 0 20px rgba(255, 0, 0, 0.8));
+    }
+    .hero-subtitle {
+      font-size: 20px;
+      color: #aaa;
+      margin-bottom: 35px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    /* NAV & BOUTONS STYLISÉS */
+    .nav-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+      max-width: 900px;
+    }
+    .btn-nav {
+      background: #1a1a1a;
+      color: #fff;
+      text-decoration: none;
+      padding: 14px 28px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      border: 2px solid #ff0000;
+      border-radius: 6px;
+      box-shadow: 0 0 10px rgba(255, 0, 0, 0.2);
+      transition: all 0.25s ease-in-out;
+    }
+    .btn-nav:hover {
+      background: #ff0000;
+      color: #000;
+      box-shadow: 0 0 20px rgba(255, 0, 0, 0.8);
+      transform: translateY(-3px);
+    }
+
+    /* SECTION LAYOUT */
+    section {
+      padding: 50px 30px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    h1 {
+      border-left: 4px solid #ff0000;
+      padding-left: 10px;
+      margin-bottom: 25px;
+      text-transform: uppercase;
+    }
+
+    /* BOUTON FLOTTANT RETOUR EN HAUT */
+    .back-to-top {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      background: #ff0000;
+      color: #000;
+      text-decoration: none;
+      font-weight: 700;
+      padding: 12px 18px;
+      border-radius: 50px;
+      box-shadow: 0 0 15px rgba(255, 0, 0, 0.6);
+      transition: transform 0.2s, background 0.2s;
+      z-index: 1000;
+      font-size: 0.9rem;
+    }
+    .back-to-top:hover {
+      background: #fff;
+      transform: scale(1.1);
+    }
+
+    /* INFO & BARRES DE STATS STYLE TCG */
+    .tcg-info {
+      font-size: 0.9rem;
+      margin-bottom: 15px;
+    }
+    .tcg-info p {
+      margin: 4px 0;
+      color: #ccc;
+    }
+    .tcg-info b {
+      color: #fff;
+    }
+
+    .tcg-stats {
+      background: #0d0d0d;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #222;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .stat-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.75rem;
+      font-weight: bold;
+    }
+    .stat-label {
+      width: 55px;
+      color: #aaa;
+      text-transform: uppercase;
+    }
+    .stat-bar-bg {
+      flex: 1;
+      height: 8px;
+      background: #222;
+      border-radius: 4px;
+      overflow: hidden;
+      border: 1px solid #333;
+    }
+    .stat-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #990000, #ff0000);
+      border-radius: 4px;
+    }
+
+    /* TABLEAU EPISODES */
+    #episodes table {
+      border-collapse: separate;
+      border-spacing: 0;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid #444;
+      width: 100%;
+      margin-top: 10px;
+    }
+    #episodes th, #episodes td {
+      border: 1px solid #444;
+      padding: 12px;
+      text-align: left;
+      vertical-align: middle;
+    }
+    #episodes th {
+      font-weight: 700;
+      text-transform: uppercase;
+      background: #1a1a1a;
+      color: #ff0000;
+      border-top: none;
+    }
+    #episodes tr th:first-child, #episodes tr td:first-child { border-left: none; }
+    #episodes tr th:last-child, #episodes tr td:last-child { border-right: none; }
+    #episodes tr:last-child td { border-bottom: none; }
+
+    /* BOUTONS YOUTUBE ET TOOLTIP */
+    .yt-col {
+      width: 50px;
+      text-align: center !important;
+    }
+    .btn-yt {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      background: #ff0000;
+      color: #fff;
+      border-radius: 50%;
+      text-decoration: none;
+      box-shadow: 0 0 8px rgba(255, 0, 0, 0.5);
+      transition: transform 0.2s, background 0.2s, box-shadow 0.2s;
+    }
+    .btn-yt:hover {
+      transform: scale(1.15);
+      background: #cc0000;
+      box-shadow: 0 0 15px rgba(255, 0, 0, 0.9);
+    }
+    .btn-yt svg {
+      width: 18px;
+      height: 18px;
+      fill: #fff;
+    }
+    
+    .btn-yt-disabled-wrapper {
+      position: relative;
+      display: inline-block;
+    }
+    .btn-yt-disabled {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      background: #333;
+      color: #666;
+      border-radius: 50%;
+      cursor: not-allowed;
+      border: 1px solid #444;
+    }
+    .btn-yt-disabled svg {
+      width: 18px;
+      height: 18px;
+      fill: #666;
+    }
+    .tooltip-text {
+      visibility: hidden;
+      background-color: #000;
+      color: #fff;
+      text-align: center;
+      border: 1px solid #ff0000;
+      border-radius: 6px;
+      padding: 6px 10px;
+      font-size: 0.75rem;
+      position: absolute;
+      z-index: 100;
+      bottom: 125%;
+      left: 0;
+      opacity: 0;
+      transition: opacity 0.2s ease-in-out;
+      pointer-events: none;
+      white-space: nowrap;
+      box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+    }
+    .btn-yt-disabled-wrapper:hover .tooltip-text {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    /* GESTION SPOILER VAINQUEUR */
+    .th-winner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .btn-spoil {
+      background: #333;
+      color: #ff0000;
+      border: 1px solid #ff0000;
+      padding: 4px 8px;
+      font-size: 0.75rem;
+      font-family: 'Oswald', Arial, sans-serif;
+      font-weight: bold;
+      border-radius: 4px;
+      cursor: pointer;
+      text-transform: uppercase;
+      transition: background 0.2s, color 0.2s;
+    }
+    .btn-spoil:hover {
+      background: #ff0000;
+      color: #000;
+    }
+    .winner-text.hidden-spoil {
+      filter: blur(6px);
+      user-select: none;
+      opacity: 0.3;
+      transition: filter 0.2s, opacity 0.2s;
+    }
+
+    /* SECTION TITRES STYLISÉE */
+    .title-showcase {
+      background: #1a1a1a;
+      border: 1px solid #333;
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.8);
+    }
+    .belt-display {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .belt-display img {
+      max-width: 380px;
+      width: 100%;
+      height: auto;
+      filter: drop-shadow(0 0 35px rgba(255, 0, 0, 0.8));
+      transition: transform 0.4s ease, filter 0.4s ease;
+      animation: floatBelt 4s ease-in-out infinite;
+    }
+    .belt-display:hover img {
+      transform: scale(1.08) rotate(1deg);
+      filter: drop-shadow(0 0 50px rgba(255, 0, 0, 1));
+    }
+    @keyframes floatBelt {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    .champion-banner {
+      background: linear-gradient(135deg, #2a0000 0%, #151515 100%);
+      border: 2px solid #ff0000;
+      border-radius: 10px;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      box-shadow: inset 0 0 15px rgba(255,0,0,0.3), 0 0 20px rgba(255, 0, 0, 0.3);
+      margin-bottom: 35px;
+    }
+    .champion-info {
+      flex: 1;
+    }
+    .badge-champ {
+      display: inline-block;
+      background: #ff0000;
+      color: #000;
+      font-weight: 700;
+      font-size: 0.8rem;
+      padding: 4px 10px;
+      border-radius: 4px;
+      letter-spacing: 1.5px;
+      margin-bottom: 8px;
+      animation: pulseBadge 2s infinite;
+    }
+    @keyframes pulseBadge {
+      0%, 100% { box-shadow: 0 0 5px rgba(255,0,0,0.8); }
+      50% { box-shadow: 0 0 18px rgba(255,0,0,1); }
+    }
+    .champion-name {
+      font-size: 2.2rem;
+      margin: 0 0 5px 0;
+      color: #fff;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .champion-detail {
+      color: #aaa;
+      margin: 0;
+      font-size: 1rem;
+    }
+    .champion-img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 2px solid #ff0000;
+      filter: drop-shadow(0 0 15px rgba(255, 0, 0, 0.6));
+    }
+
+    /* TIMELINE HISTORIQUE */
+    .timeline-title {
+      font-size: 1.3rem;
+      color: #ff0000;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      border-bottom: 1px solid #333;
+      padding-bottom: 8px;
+    }
+    .history-timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      position: relative;
+      padding-left: 20px;
+      border-left: 2px solid #333;
+    }
+    .timeline-item {
+      position: relative;
+      background: #222;
+      border: 1px solid #333;
+      border-radius: 8px;
+      padding: 12px 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: border-color 0.3s, transform 0.2s;
+    }
+    .timeline-item:hover {
+      border-color: #ff0000;
+      transform: translateX(5px);
+    }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -27px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 12px;
+      height: 12px;
+      background: #ff0000;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #ff0000;
+    }
+    .reign-num {
+      color: #ff0000;
+      font-weight: bold;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+    }
+    .champ-holder {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-left: 10px;
+    }
+    .reign-event {
+      color: #888;
+      font-size: 0.9rem;
+      font-style: italic;
+    }
+
+    /* GALERIE */
+    .gallery-grid {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 25px;
+      margin-top: 20px;
+    }
+    .gallery-item {
+      background: #222;
+      border: 1px solid #333;
+      border-radius: 12px;
+      padding: 15px;
+      text-align: center;
+      box-shadow: 0 0 15px rgba(255, 0, 0, 0.4);
+      width: 100%;
+      max-width: 600px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .gallery-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 25px rgba(255, 0, 0, 0.7);
+    }
+    .gallery-item img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+    .gallery-item p {
+      margin: 12px 0 0 0;
+      font-size: 1.1rem;
+      text-transform: uppercase;
+      color: #fff;
+    }
+
+    /* NEWS & HISTOIRE */
+    .news-container {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+    .news-card {
+      background: #222;
+      border: 1px solid #333;
+      border-left: 4px solid #ff0000;
+      border-radius: 30px;
+      padding: 15px 20px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .news-card:hover {
+      transform: scale(1.03) translateY(-2px);
+      box-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
+    }
+    .news-date {
+      color: #ff0000;
+      font-size: 0.85rem;
+      font-weight: bold;
+      text-transform: uppercase;
+      margin-bottom: 5px;
+    }
+    .news-title {
+      font-size: 1.3rem;
+      margin: 0 0 8px 0;
+      color: #fff;
+    }
+    .news-card p {
+      margin: 0;
+      color: #ccc;
+      font-size: 0.95rem;
+      font-family: Arial, sans-serif;
+    }
+
+    footer {
+      background: #1a1a1a;
+      padding: 20px;
+      text-align: center;
+      margin-top: 40px;
+      border-top: 1px solid #333;
+      color: #888;
+    }
+
+    /* --- ROSTER TCG STYLE --- */
+    .roster-grid-tcg {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0;
+      margin-top: 30px;
+      position: relative;
+      padding: 20px 0;
+      min-height: 520px;
+    }
+
+    .tcg-card {
+      background: linear-gradient(145deg, #1f1f1f, #141414);
+      border: 2px solid #333;
+      border-radius: 12px;
+      padding: 15px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8);
+      position: relative;
+      width: 280px;
+      transition: transform 0.4s ease-in-out, z-index 0.4s ease-in-out, border-color 0.3s;
+    }
+
+    .tcg-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+    }
+
+    .tcg-name {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #fff;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .tcg-record {
+      background: #ff0000;
+      color: #000;
+      font-size: 0.85rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 4px;
+      letter-spacing: 1px;
+    }
+
+    .tcg-img-container {
+      width: 100%;
+      height: 220px;
+      background: radial-gradient(circle, #2a0000 0%, #111 80%);
+      border: 1px solid #333;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 15px 0;
+      overflow: hidden;
+    }
+    .tcg-img-container img {
+      max-height: 100%;
+      width: auto;
+      object-fit: contain;
+      filter: drop-shadow(0 0 15px rgba(255, 0, 0, 0.8));
+      transition: transform 0.3s ease;
+    }
+    .tcg-card:hover .tcg-img-container img {
+      transform: scale(1.1);
+    }
+
+    .card-ghostboy {
+      z-index: 3;
+      border-color: #ffc400;
+      box-shadow: 0 0 25px rgba(255, 196, 0, 0.4);
+      background: linear-gradient(145deg, #242012, #141414);
+    }
+
+    .tcg-belt-container {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .tcg-belt {
+      height: 28px;
+      opacity: 1;
+      object-fit: contain;
+    }
+
+    .card-ukyo {
+      z-index: 1;
+      transform: translateX(35px) scale(0.95);
+    }
+    .card-tgk {
+      z-index: 1;
+      transform: translateX(-35px) scale(0.95);
+    }
+
+    .card-ukyo:hover {
+      transform: translateX(-20px) translateY(-10px) scale(1);
+      z-index: 5;
+      border-color: #ff0000;
+      box-shadow: 0 0 25px rgba(255, 0, 0, 0.6);
+    }
+
+    .card-tgk:hover {
+      transform: translateX(20px) translateY(-10px) scale(1);
+      z-index: 5;
+      border-color: #ff0000;
+      box-shadow: 0 0 25px rgba(255, 0, 0, 0.6);
+    }
+
+    .card-ghostboy:hover {
+      transform: translateY(-10px) scale(1.02);
+      z-index: 5;
+      border-color: #ffc400;
+      box-shadow: 0 0 30px rgba(255, 196, 0, 0.7);
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- ACCUEIL / HERO -->
+<header id="accueil">
+  <img src="images/ATW BLANC.png" alt="ATW Logo" class="hero-logo">
+  <p class="hero-subtitle">Amateur Trampoline Wrestling</p>
+  
+  <nav class="nav-buttons">
+    <a href="#roster" class="btn-nav">Roster</a>
+    <a href="#episodes" class="btn-nav">Épisodes & Matches</a>
+    <a href="#title" class="btn-nav">Titres</a>
+    <a href="#histoire" class="btn-nav">Histoire</a>
+    <a href="#galerie" class="btn-nav">Galerie</a>
+    <a href="#news" class="btn-nav">News</a>
+  </nav>
+</header>
+
+<!-- BOUTON FLOTTANT HAUT DE PAGE -->
+<a href="#accueil" class="back-to-top">▲ ACCUEIL</a>
+
+<!-- ROSTER STYLE TCG -->
+<section id="roster">
+  <h1>Roster ATW — Bouncers</h1>
+
+  <div class="roster-grid-tcg">
+
+    <!-- CARTE UKYO -->
+    <div class="tcg-card card-ukyo">
+      <div class="tcg-header">
+        <h2 class="tcg-name">UKYO</h2>
+        <span class="tcg-record">4 - 4</span>
+      </div>
+
+      <div class="tcg-img-container" style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)), url('images/atw fire.jpeg'); background-size: cover; background-position: center;">
+        <img src="images/ukyo portrait.png" alt="UKYO">
+      </div>
+
+      <div class="tcg-info">
+        <p>Style : <b>Lucha / Highflyer</b></p>
+        <p>Finisher : <b>Starblast</b></p>
+      </div>
+
+      <div class="tcg-stats">
+        <div class="stat-row">
+          <span class="stat-label">VOL</span>
+          <div class="stat-bar-bg"><div class="stat-bar-fill" style="width: 90%;"></div></div>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">AGILITÉ</span>
+          <div class="stat-bar-bg"><div class="stat-bar-fill" style="width: 80%;"></div></div>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">FORCE</span>
+          <div class="stat-bar-bg"><div class="stat-bar-fill" style="width: 20%;"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARTE GHOSTBOY (AU PREMIER PLAN) -->
+    <div class="tcg-card card-ghostboy">
+      <div class="tcg-header">
+        <h2 class="tcg-name">GHOSTBOY</h2>
+        <div class="tcg-belt-container">
+          <img src="images/titre.png" alt="Champion Belt" class="tcg-belt">
+        </div>
+        <span class="tcg-record">8 - 5</span>
+      </div>
+
+      <div class="tcg-img-container" style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)), url('images/atw fire.jpeg'); background-size: cover; background-position: center;">
+        <img src="images/ghostboy portrait.png" alt="GHOSTBOY">
+      </div>
+
+      <div class="tcg-info">
+        <p>Style : <b>Agile / Mystérieux</b></p>
+        <p>Finisher : <b>Kisses In The Wind</b></p>
+      </div>
+
+      <div class="tcg-stats">
+        <div class="stat-row">
+          <span class="stat-label">AGILITÉ</span>
+          <div class="stat-bar-bg"><div class="stat-bar-fill" style="width: 90%;"></div></div>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">VICE</span>
+          <div class="stat-bar-bg"><div class="stat-bar-fill" style="width: 80%;"></div></div>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">FORCE</span>
+          <div class="stat-bar-bg"><div class="stat-bar-fill" style="width: 65%;"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARTE THE GAUNT KNIGHT -->
+    <div class="tcg-card card-tgk">
+      <div class="tcg-header">
+        <h2 class="tcg-name">THE GAUNT KNIGHT</h2>
+        <span class="tcg-record">3 - 7</span>
+      </div>
+
+      <div class="tcg-img-container" style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)), url('images/atw fire.jpeg'); background-size: cover; background-position: center;">
+        <img src="images/tgk portrait.png" alt="THE GAUNT KNIGHT">
+      </div>
+
+      <div class="tcg-info">
+        <p>Style : <b>Powerhouse / Autiste</b></p>
+        <p>Finisher : <b>Oblivion Gates</b></p>
+      </div>
+
+      <div class="tcg-stats">
+        <div class="stat-row">
+          <span class="stat-label">FORCE</span>
+          <div class="stat-bar-bg"><div class="stat-bar-fill" style="width: 85%;"></div></div>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">CHAOS</span>
+          <div class="stat-bar-bg"><div class="stat-bar-fill" style="width: 70%;"></div></div>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">RAGE</span>
+          <div class="stat-bar-bg"><div class="stat-bar-fill" style="width: 100%;"></div></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ÉPISODES -->
+<section id="episodes">
+  <h1>Épisodes & Matches</h1>
+
+  <table>
+    <tbody>
+      <tr>
+        <th class="yt-col">VOIR</th>
+        <th>ÉPISODE</th>
+        <th>MATCH</th>
+        <th>STIPULATION</th>
+        <th>
+          <div class="th-winner">
+            <span>VAINQUEUR</span>
+            <button class="btn-spoil" onclick="toggleSpoilers()">Spoilers: OFF</button>
+          </div>
+        </th>
+      </tr>
+      <tr>
+        <td class="yt-col">
+          <a href="https://youtu.be/PS0UKnpVFvw?is=t7EJrk9tAe1miAtg" target="_blank" class="btn-yt" title="Regarder sur YouTube">
+            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          </a>
+        </td>
+        <td>ep 1</td>
+        <td>UKYO vs GHOSTBOY vs THE GAUNT KNIGHT</td>
+        <td>TRIPLE THREAT DOG FIGHT MATCH</td>
+        <td><span class="winner-text hidden-spoil">UKYO</span></td>
+      </tr>
+      <tr>
+        <td class="yt-col">
+          <a href="https://youtu.be/a6bq2U9lopk?is=AZgyFSqHM8Ro2v9D" target="_blank" class="btn-yt" title="Regarder sur YouTube">
+            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          </a>
+        </td>
+        <td>ep 2</td>
+        <td>GHOSTBOY vs UKYO</td>
+        <td>ATW TITLE MATCH</td>
+        <td><span class="winner-text hidden-spoil">UKYO</span></td>
+      </tr>
+      <tr>
+        <td class="yt-col">
+          <a href="https://youtu.be/FEgC3PdyHEA?is=sT2XR9RnW8z2slu1" target="_blank" class="btn-yt" title="Regarder sur YouTube">
+            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          </a>
+        </td>
+        <td>ep 3</td>
+        <td>THE GAUNT KNIGHT vs UKYO</td>
+        <td>NO HOLDS BARRED MATCH</td>
+        <td><span class="winner-text hidden-spoil">UKYO</span></td>
+      </tr>
+      <tr>
+        <td class="yt-col">
+          <a href="https://youtu.be/n48tq2GDmlI?is=HBdoRFuI5yG681MV" target="_blank" class="btn-yt" title="Regarder sur YouTube">
+            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          </a>
+        </td>
+        <td>ep 4</td>
+        <td>THE GAUNT KNIGHT vs GHOSTBOY</td>
+        <td>No1 CONTENDERS MATCH</td>
+        <td><span class="winner-text hidden-spoil">THE GAUNT KNIGHT</span></td>
+      </tr>
+      <tr>
+        <td class="yt-col">
+          <div class="btn-yt-disabled-wrapper">
+            <div class="btn-yt-disabled"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+            <span class="tooltip-text">Pas encore disponible</span>
+          </div>
+        </td>
+        <td>BOUNCE OF FURY 2026 (5)</td>
+        <td>THE GAUNT KNIGHT vs UKYO</td>
+        <td>ATW TITLE MATCH</td>
+        <td><span class="winner-text hidden-spoil">THE GAUNT KNIGHT</span></td>
+      </tr>
+      <tr>
+        <td class="yt-col">
+          <div class="btn-yt-disabled-wrapper">
+            <div class="btn-yt-disabled"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+            <span class="tooltip-text">Pas encore disponible</span>
+          </div>
+        </td>
+        <td>ep 6</td>
+        <td>GHOSTBOY vs UKYO / GHOSTBOY vs THE GAUNT KNIGHT</td>
+        <td>normal match x2</td>
+        <td><span class="winner-text hidden-spoil">GHOSTBOY</span></td>
+      </tr>
+      <tr>
+        <td class="yt-col">
+          <div class="btn-yt-disabled-wrapper">
+            <div class="btn-yt-disabled"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+            <span class="tooltip-text">Pas encore disponible</span>
+          </div>
+        </td>
+        <td>ep 7</td>
+        <td>GHOSTBOY vs UKYO</td>
+        <td>NORMAL MATCH</td>
+        <td><span class="winner-text hidden-spoil">GHOSTBOY</span></td>
+      </tr>
+      <tr>
+        <td class="yt-col">
+          <div class="btn-yt-disabled-wrapper">
+            <div class="btn-yt-disabled"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+            <span class="tooltip-text">Pas encore disponible</span>
+          </div>
+        </td>
+        <td>ep 8</td>
+        <td>UKYO vs GHOSTBOY</td>
+        <td>EXTREME RULES</td>
+        <td><span class="winner-text hidden-spoil">UKYO</span></td>
+      </tr>
+      <tr>
+        <td class="yt-col">
+          <div class="btn-yt-disabled-wrapper">
+            <div class="btn-yt-disabled"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+            <span class="tooltip-text">Pas encore disponible</span>
+          </div>
+        </td>
+        <td>ep 9</td>
+        <td>UKYO vs GHOSTBOY</td>
+        <td>???</td>
+        <td><span class="winner-text hidden-spoil">GHOSTBOY</span></td>
+      </tr>
+      <tr>
+        <td class="yt-col">
+          <div class="btn-yt-disabled-wrapper">
+            <div class="btn-yt-disabled"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+            <span class="tooltip-text">Pas encore disponible</span>
+          </div>
+        </td>
+        <td>ULTIMATE BATTLE 2026 (10)</td>
+        <td>GHOSTBOY vs THE GAUNT KNIGHT</td>
+        <td>ATW TITLE MATCH</td>
+        <td><span class="winner-text hidden-spoil">GHOSTBOY</span></td>
+      </tr>
+      <tr>
+        <td class="yt-col">
+          <div class="btn-yt-disabled-wrapper">
+            <div class="btn-yt-disabled"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+            <span class="tooltip-text">Pas encore disponible</span>
+          </div>
+        </td>
+        <td>ep 11</td>
+        <td>GHOSTBOY vs THE GAUNT KNIGHT</td>
+        <td>ATW TITLE MATCH</td>
+        <td><span class="winner-text hidden-spoil">GHOSTBOY</span></td>
+      </tr>
+      <tr>
+        <td class="yt-col">
+          <div class="btn-yt-disabled-wrapper">
+            <div class="btn-yt-disabled"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+            <span class="tooltip-text">Pas encore disponible</span>
+          </div>
+        </td>
+        <td>ep 12</td>
+        <td>GHOSTBOY vs THE GAUNT KNIGHT</td>
+        <td>???</td>
+        <td><span class="winner-text hidden-spoil">GHOSTBOY</span></td>
+      </tr>
+      <tr>
+        <td class="yt-col">
+          <div class="btn-yt-disabled-wrapper">
+            <div class="btn-yt-disabled"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+            <span class="tooltip-text">Pas encore disponible</span>
+          </div>
+        </td>
+        <td>ep 13</td>
+        <td>GHOSTBOY vs THE GAUNT KNIGHT</td>
+        <td>???</td>
+        <td><span class="winner-text hidden-spoil">THE GAUNT KNIGHT</span></td>
+      </tr>
+      <tr>
+        <td class="yt-col">
+          <div class="btn-yt-disabled-wrapper">
+            <div class="btn-yt-disabled"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+            <span class="tooltip-text">Pas encore disponible</span>
+          </div>
+        </td>
+        <td>ep 14</td>
+        <td>GHOSTBOY vs THE GAUNT KNIGHT</td>
+        <td>???</td>
+        <td><span class="winner-text hidden-spoil">GHOSTBOY</span></td>
+      </tr>
+      <tr>
+        <td class="yt-col">
+          <div class="btn-yt-disabled-wrapper">
+            <div class="btn-yt-disabled"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+            <span class="tooltip-text">Pas encore disponible</span>
+          </div>
+        </td>
+        <td>3rd CPV (15)</td>
+        <td>GHOSTBOY vs ???</td>
+        <td>ATW TITLE MATCH</td>
+        <td><span class="winner-text hidden-spoil">???</span></td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- TITRES -->
+<section id="title">
+  <h1>Titres ATW</h1>
+
+  <div class="title-showcase">
+    
+    <div class="belt-display">
+      <img src="images/titre.png" alt="ATW Championship Belt">
+    </div>
+
+    <div class="champion-banner">
+      <div class="champion-info">
+        <span class="badge-champ">CHAMPION EN TITRE</span>
+        <h2 class="champion-name">GHOSTBOY</h2>
+        <p class="champion-detail">Gagné lors de : <b>ULTIMATE BATTLE 2026 (Ép. 10)</b></p>
+      </div>
+      <img src="images/ghostboy portrait.png" alt="Ghostboy" class="champion-img">
+    </div>
+
+    <div class="timeline-title">Historique des Règnes</div>
+    
+    <div class="history-timeline">
+      
+      <div class="timeline-item">
+        <div>
+          <span class="reign-num">1er Reign</span>
+          <span class="champ-holder">UKYO</span>
+        </div>
+        <span class="reign-event">Sacre à l'Épisode 2</span>
+      </div>
+
+      <div class="timeline-item">
+        <div>
+          <span class="reign-num">2ème Reign</span>
+          <span class="champ-holder">THE GAUNT KNIGHT</span>
+        </div>
+        <span class="reign-event">Sacre à Bounce Of Fury 2026</span>
+      </div>
+
+      <div class="timeline-item" style="border-color: #ff0000; background: #2a1111;">
+        <div>
+          <span class="reign-num">3ème Reign</span>
+          <span class="champ-holder">GHOSTBOY</span>
+        </div>
+        <span class="reign-event">Sacre à Ultimate Battle 2026</span>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- HISTOIRE -->
+<section id="histoire">
+  <h1>Histoire de l’ATW</h1>
+  <div style="background: #222; padding: 20px; border-radius: 8px; border: 1px solid #333;">
+    <p>L’ATW est une fédération de trampoline wrestling fondée par Ukyo, son frère et leur ami. Inspirée par KBW, la fédé mélange cascades, lucha libre et créativité totale.</p>
+    <p style="color: #aaa; font-style: italic; margin-bottom: 0;">C'est principalement UKYO et GHOSTBOY qui gèrent tout le projet, car THE GAUNT KNIGHT est un petit con qui n'aide à rien (au contraire, il ralentit tout).</p>
+  </div>
+</section>
+
+<!-- GALERIE -->
+<section id="galerie">
+  <h1>Galerie</h1>
+
+  <div class="gallery-grid">
+    <div class="gallery-item">
+      <img src="images/atw_debut.png" alt="les débuts">
+      <p>Le Commencement</p>
+    </div>
+    <div class="gallery-item">
+      <img src="images/atw championship.png" alt="ATW Championship">
+      <p>ATW Championship</p>
+    </div>
+    <div class="gallery-item">
+      <img src="images/ukyo get ready.png" alt="Ukyo get ready">
+      <p>Ukyo Get Ready</p>
+    </div>
+    <div class="gallery-item">
+      <img src="images/tgk rock n roll.png" alt="TGK Rock N Roll">
+      <p>TGK Rock N Roll</p>
+    </div>
+    <div class="gallery-item">
+      <img src="images/ghostboy assis.png" alt="Ghostboy assis">
+      <p>Ghostboy Assis</p>
+    </div>
+    <div class="gallery-item">
+      <img src="images/ouch.png" alt="Ouch ATW">
+      <p>Ouch !</p>
+    </div>
+    <div class="gallery-item">
+      <img src="images/what a suplex.png" alt="Suplex ATW">
+      <p>What A Suplex !</p>
+    </div>
+    <div class="gallery-item">
+      <img src="images/kick.png" alt="Kick">
+      <p>Kick</p>
+    </div>
+    <div class="gallery-item">
+      <img src="images/and neeew.png" alt="And New Champion">
+      <p>And New !</p>
+    </div>
+  </div>
+</section>
+
+<!-- NEWS -->
+<section id="news">
+  <h1>Backstage / News</h1>
+
+  <div class="news-container">
+
+    <div class="news-card">
+      <div class="news-date">OFFICIEL — CALENDRIER</div>
+      <h3 class="news-title">Bounce Of Fury Reporté À 2026 !</h3>
+      <p>Initialement prévu pour 2025, le Pay-Per-View majeur de l'ATW est officiellement repoussé à 2026. La direction promet un show historique pour compenser cette attente.</p>
+    </div>
+
+    <div class="news-card">
+      <div class="news-date">RÉVÉLATION — ARENA</div>
+      <h3 class="news-title">Une Nouvelle Arène Dévoilée À Bounce Of Fury</h3>
+      <p>C'est confirmé : l’ATW s'agrandit. Le lieu de combat officiel change d'échelle et sera présenté en exclusivité lors de Bounce Of Fury 2026.</p>
+    </div>
+
+    <div class="news-card">
+      <div class="news-date">DEBAT — TRAMPOLINE WRESTLING</div>
+      <h3 class="news-title">L'ATW : Pire Fédé De L'Histoire Ou Génie Incompris ?</h3>
+      <p>Entre chaos en coulisses, rivalités explosives et gestion douteuse, les avis se déchirent. L'ATW continue de diviser mais reste impossible à ignorer.</p>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <p>ATW © 2026 — Amateur Trampoline Wrestling</p>
+</footer>
+
+<script>
+  let showSpoilers = false;
+
+  function toggleSpoilers() {
+    showSpoilers = !showSpoilers;
+    const winners = document.querySelectorAll('.winner-text');
+    const btn = document.querySelector('.btn-spoil');
+
+    if (showSpoilers) {
+      winners.forEach(w => w.classList.remove('hidden-spoil'));
+      btn.textContent = 'Spoilers: ON';
+      btn.style.background = '#ff0000';
+      btn.style.color = '#000';
+    } else {
+      winners.forEach(w => w.classList.add('hidden-spoil'));
+      btn.textContent = 'Spoilers: OFF';
+      btn.style.background = '#333';
+      btn.style.color = '#ff0000';
+    }
+  }
+</script>
+
+</body>
+</html>

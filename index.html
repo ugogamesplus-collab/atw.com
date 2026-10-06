@@ -87,11 +87,18 @@
       text-transform: uppercase;
     }
 
-    /* BOUTON FLOTTANT RETOUR EN HAUT */
-    .back-to-top {
+    /* MENU FLOTTANT BAS DE PAGE */
+    .floating-menu {
       position: fixed;
       bottom: 25px;
       right: 25px;
+      z-index: 1000;
+      display: flex;
+      flex-direction: column-reverse;
+      align-items: flex-end;
+      gap: 10px;
+    }
+    .back-to-top {
       background: #ff0000;
       color: #000;
       text-decoration: none;
@@ -100,12 +107,49 @@
       border-radius: 50px;
       box-shadow: 0 0 15px rgba(255, 0, 0, 0.6);
       transition: transform 0.2s, background 0.2s;
-      z-index: 1000;
       font-size: 0.9rem;
+      white-space: nowrap;
     }
     .back-to-top:hover {
       background: #fff;
       transform: scale(1.1);
+    }
+    .floating-submenu {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(10px);
+      transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
+      align-items: flex-end;
+      pointer-events: none;
+    }
+    .floating-menu:hover .floating-submenu {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+    .btn-float-sub {
+      background: #1a1a1a;
+      color: #ff8800;
+      text-decoration: none;
+      font-weight: 700;
+      padding: 10px 16px;
+      border: 2px solid #ff8800;
+      border-radius: 6px;
+      box-shadow: 0 0 10px rgba(255, 136, 0, 0.3);
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      transition: all 0.2s ease-in-out;
+      white-space: nowrap;
+    }
+    .btn-float-sub:hover {
+      background: #ff8800;
+      color: #000;
+      box-shadow: 0 0 20px rgba(255, 136, 0, 0.8);
+      transform: scale(1.05);
     }
 
     /* INFO & BARRES DE STATS STYLE TCG */
@@ -430,13 +474,80 @@
       font-style: italic;
     }
 
-    /* GALERIE */
+    /* GALERIE LAYOUT AVEC NAVIGATION LATÉRALE */
+    #galerie {
+      position: relative;
+      max-width: 1200px;
+    }
+    .gallery-layout {
+      display: flex;
+      gap: 40px;
+      align-items: flex-start;
+      position: relative;
+    }
+    .gallery-sidebar {
+      position: sticky;
+      top: 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      width: 100px;
+      flex-shrink: 0;
+      align-items: flex-start; /* Modification pour coller au maximum à gauche */
+    }
+    .gallery-nav-btn {
+      width: 70px;
+      height: 50px;
+      background: #1a1a1a;
+      color: #fff;
+      text-decoration: none;
+      font-family: 'Oswald', Arial, sans-serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid #ff0000;
+      border-radius: 6px;
+      box-shadow: 0 0 10px rgba(255, 0, 0, 0.2);
+      transition: all 0.25s ease-in-out;
+    }
+    .gallery-nav-btn:hover {
+      background: #ff0000;
+      color: #000;
+      box-shadow: 0 0 20px rgba(255, 0, 0, 0.8);
+      transform: scale(1.05);
+    }
+    .gallery-nav-dots {
+      color: #ff0000;
+      font-weight: bold;
+      font-size: 1.2rem;
+      line-height: 1;
+      letter-spacing: 2px;
+      padding-left: 25px; /* Centré par rapport aux boutons de 70px */
+    }
+    .gallery-content-area {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .gallery-episode-section {
+      margin-bottom: 50px;
+      scroll-margin-top: 30px;
+    }
+    .gallery-episode-title {
+      font-size: 1.4rem;
+      color: #ff0000;
+      border-bottom: 1px solid #333;
+      padding-bottom: 5px;
+      margin-bottom: 15px;
+      text-transform: uppercase;
+    }
     .gallery-grid {
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 25px;
-      margin-top: 20px;
     }
     .gallery-item {
       background: #222;
@@ -458,12 +569,34 @@
       aspect-ratio: 16 / 9;
       object-fit: cover;
       border-radius: 8px;
+      cursor: pointer;
+      transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); /* Animation smooth */
     }
+    
+    /* Classe active pour faire grossir l'image en grand */
+    .gallery-item img.zoomed {
+      transform: scale(1.6);
+      position: relative;
+      z-index: 50;
+      box-shadow: 0 0 30px rgba(255, 0, 0, 0.8);
+    }
+
     .gallery-item p {
       margin: 12px 0 0 0;
       font-size: 1.1rem;
       text-transform: uppercase;
       color: #fff;
+    }
+    .gallery-placeholder {
+      background: #161616;
+      border: 2px dashed #444;
+      border-radius: 12px;
+      padding: 30px;
+      text-align: center;
+      color: #666;
+      font-style: italic;
+      width: 100%;
+      max-width: 600px;
     }
 
     /* NEWS & HISTOIRE */
@@ -535,7 +668,7 @@
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8);
       position: relative;
       width: 280px;
-      transition: transform 0.4s ease-in-out, z-index 0.4s ease-in-out, border-color 0.3s;
+      transition: transform 0.4s ease-in-out, z-index 0.4s ease-in-out, border-color 0.3s, box-shadow 0.3s;
     }
 
     .tcg-header {
@@ -587,7 +720,8 @@
       transform: scale(1.1);
     }
 
-    .card-ghostboy {
+    /* CARTE UKYO AU PREMIER PLAN (CHAMPION) */
+    .card-ukyo {
       z-index: 3;
       border-color: #ffc400;
       box-shadow: 0 0 25px rgba(255, 196, 0, 0.4);
@@ -609,34 +743,52 @@
       object-fit: contain;
     }
 
-    .card-ukyo {
-      z-index: 1;
-      transform: translateX(35px) scale(0.95);
-    }
-    .card-tgk {
+    .card-ghostboy {
       z-index: 1;
       transform: translateX(-35px) scale(0.95);
     }
+    .card-tgk {
+      z-index: 1;
+      transform: translateX(35px) scale(0.95);
+    }
 
-    .card-ukyo:hover {
-      transform: translateX(-20px) translateY(-10px) scale(1);
+    .card-ghostboy:hover {
+      transform: translateX(-35px) translateY(-10px) scale(1.03);
       z-index: 5;
       border-color: #ff0000;
       box-shadow: 0 0 25px rgba(255, 0, 0, 0.6);
     }
 
     .card-tgk:hover {
-      transform: translateX(20px) translateY(-10px) scale(1);
+      transform: translateX(35px) translateY(-10px) scale(1.03);
       z-index: 5;
       border-color: #ff0000;
       box-shadow: 0 0 25px rgba(255, 0, 0, 0.6);
     }
 
-    .card-ghostboy:hover {
-      transform: translateY(-10px) scale(1.02);
+    .card-ukyo:hover {
+      transform: translateY(-10px) scale(1.05);
       z-index: 5;
       border-color: #ffc400;
       box-shadow: 0 0 30px rgba(255, 196, 0, 0.7);
+    }
+
+    /* Responsive mobile basique pour la galerie */
+    @media (max-width: 768px) {
+      .gallery-layout {
+        flex-direction: column;
+      }
+      .gallery-sidebar {
+        position: static;
+        flex-direction: row;
+        width: 100%;
+        justify-content: flex-start;
+        margin-bottom: 20px;
+        align-items: center;
+      }
+      .gallery-nav-dots {
+        display: none;
+      }
     }
   </style>
 </head>
@@ -658,8 +810,18 @@
   </nav>
 </header>
 
-<!-- BOUTON FLOTTANT HAUT DE PAGE -->
-<a href="#accueil" class="back-to-top">▲ ACCUEIL</a>
+<!-- MENU FLOTTANT BAS DE PAGE AVEC SOUS-BOUTONS ORANGE -->
+<div class="floating-menu">
+  <a href="#accueil" class="back-to-top">▲ ACCUEIL</a>
+  <div class="floating-submenu">
+    <a href="#roster" class="btn-float-sub">Roster</a>
+    <a href="#episodes" class="btn-float-sub">Épisodes</a>
+    <a href="#title" class="btn-float-sub">Titres</a>
+    <a href="#histoire" class="btn-float-sub">Histoire</a>
+    <a href="#galerie" class="btn-float-sub">Galerie</a>
+    <a href="#news" class="btn-float-sub">News</a>
+  </div>
+</div>
 
 <!-- ROSTER STYLE TCG -->
 <section id="roster">
@@ -667,45 +829,10 @@
 
   <div class="roster-grid-tcg">
 
-    <!-- CARTE UKYO -->
-    <div class="tcg-card card-ukyo">
-      <div class="tcg-header">
-        <h2 class="tcg-name">UKYO</h2>
-        <span class="tcg-record">4 - 4</span>
-      </div>
-
-      <div class="tcg-img-container" style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)), url('images/atw fire.jpeg'); background-size: cover; background-position: center;">
-        <img src="images/ukyo portrait.png" alt="UKYO">
-      </div>
-
-      <div class="tcg-info">
-        <p>Style : <b>Lucha / Highflyer</b></p>
-        <p>Finisher : <b>Starblast</b></p>
-      </div>
-
-      <div class="tcg-stats">
-        <div class="stat-row">
-          <span class="stat-label">VOL</span>
-          <div class="stat-bar-bg"><div class="stat-bar-fill" style="width: 90%;"></div></div>
-        </div>
-        <div class="stat-row">
-          <span class="stat-label">AGILITÉ</span>
-          <div class="stat-bar-bg"><div class="stat-bar-fill" style="width: 80%;"></div></div>
-        </div>
-        <div class="stat-row">
-          <span class="stat-label">FORCE</span>
-          <div class="stat-bar-bg"><div class="stat-bar-fill" style="width: 20%;"></div></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- CARTE GHOSTBOY (AU PREMIER PLAN) -->
+    <!-- CARTE GHOSTBOY -->
     <div class="tcg-card card-ghostboy">
       <div class="tcg-header">
         <h2 class="tcg-name">GHOSTBOY</h2>
-        <div class="tcg-belt-container">
-          <img src="images/titre.png" alt="Champion Belt" class="tcg-belt">
-        </div>
         <span class="tcg-record">8 - 5</span>
       </div>
 
@@ -716,6 +843,7 @@
       <div class="tcg-info">
         <p>Style : <b>Agile / Mystérieux</b></p>
         <p>Finisher : <b>Kisses In The Wind</b></p>
+        <p>Coup Spécial : <b>GhostBuster</b></p>
       </div>
 
       <div class="tcg-stats">
@@ -724,12 +852,48 @@
           <div class="stat-bar-bg"><div class="stat-bar-fill" style="width: 90%;"></div></div>
         </div>
         <div class="stat-row">
-          <span class="stat-label">VICE</span>
-          <div class="stat-bar-bg"><div class="stat-bar-fill" style="width: 80%;"></div></div>
+          <span class="stat-label">TECHNIC</span>
+          <div class="stat-bar-bg"><div class="stat-bar-fill" style="width: 75%;"></div></div>
         </div>
         <div class="stat-row">
           <span class="stat-label">FORCE</span>
-          <div class="stat-bar-bg"><div class="stat-bar-fill" style="width: 65%;"></div></div>
+          <div class="stat-bar-bg"><div class="stat-bar-fill" style="width: 60%;"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARTE UKYO (AU PREMIER PLAN AVEC LA CEINTURE) -->
+    <div class="tcg-card card-ukyo">
+      <div class="tcg-header">
+        <h2 class="tcg-name">UKYO</h2>
+        <div class="tcg-belt-container">
+          <img src="images/titre.png" alt="Champion Belt" class="tcg-belt">
+        </div>
+        <span class="tcg-record">4 - 4</span>
+      </div>
+
+      <div class="tcg-img-container" style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)), url('images/atw fire.jpeg'); background-size: cover; background-position: center;">
+        <img src="images/ukyo portrait.png" alt="UKYO">
+      </div>
+
+      <div class="tcg-info">
+        <p>Style : <b>Lucha / Highflyer</b></p>
+        <p>Finisher : <b>Starblast</b></p>
+        <p>Coup Spécial : <b>Sink or Swim</b></p>
+      </div>
+
+      <div class="tcg-stats">
+        <div class="stat-row">
+          <span class="stat-label">VOL</span>
+          <div class="stat-bar-bg"><div class="stat-bar-fill" style="width: 90%;"></div></div>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">VICE</span>
+          <div class="stat-bar-bg"><div class="stat-bar-fill" style="width: 67%;"></div></div>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">FORCE</span>
+          <div class="stat-bar-bg"><div class="stat-bar-fill" style="width: 20%;"></div></div>
         </div>
       </div>
     </div>
@@ -746,8 +910,9 @@
       </div>
 
       <div class="tcg-info">
-        <p>Style : <b>Powerhouse / Autiste</b></p>
+        <p>Style : <b>Warrior / Powerful</b></p>
         <p>Finisher : <b>Oblivion Gates</b></p>
+        <p>Coup Spécial : <b>Magic Sword</b></p>
       </div>
 
       <div class="tcg-stats">
@@ -756,12 +921,12 @@
           <div class="stat-bar-bg"><div class="stat-bar-fill" style="width: 85%;"></div></div>
         </div>
         <div class="stat-row">
-          <span class="stat-label">CHAOS</span>
-          <div class="stat-bar-bg"><div class="stat-bar-fill" style="width: 70%;"></div></div>
+          <span class="stat-label"></span>
+          <div class="stat-bar-bg"><div class="stat-bar-fill" style="width: 0%;"></div></div>
         </div>
         <div class="stat-row">
           <span class="stat-label">RAGE</span>
-          <div class="stat-bar-bg"><div class="stat-bar-fill" style="width: 100%;"></div></div>
+          <div class="stat-bar-bg"><div class="stat-bar-fill" style="width: 70%;"></div></div>
         </div>
       </div>
     </div>
@@ -769,7 +934,7 @@
   </div>
 </section>
 
-<!-- ÉPISODES -->
+<!-- ÉPISODES --> 
 <section id="episodes">
   <h1>Épisodes & Matches</h1>
 
@@ -793,9 +958,9 @@
             <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
           </a>
         </td>
-        <td>ep 1</td>
+        <td>Épisode 1</td>
         <td>UKYO vs GHOSTBOY vs THE GAUNT KNIGHT</td>
-        <td>TRIPLE THREAT DOG FIGHT MATCH</td>
+        <td>TRIPLE MEN DOG FIGHT MATCH</td>
         <td><span class="winner-text hidden-spoil">UKYO</span></td>
       </tr>
       <tr>
@@ -804,7 +969,7 @@
             <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
           </a>
         </td>
-        <td>ep 2</td>
+        <td>Épisode 2</td>
         <td>GHOSTBOY vs UKYO</td>
         <td>ATW TITLE MATCH</td>
         <td><span class="winner-text hidden-spoil">UKYO</span></td>
@@ -815,7 +980,7 @@
             <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
           </a>
         </td>
-        <td>ep 3</td>
+        <td>Épisode 3</td>
         <td>THE GAUNT KNIGHT vs UKYO</td>
         <td>NO HOLDS BARRED MATCH</td>
         <td><span class="winner-text hidden-spoil">UKYO</span></td>
@@ -826,7 +991,7 @@
             <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
           </a>
         </td>
-        <td>ep 4</td>
+        <td>Épisode 4</td>
         <td>THE GAUNT KNIGHT vs GHOSTBOY</td>
         <td>No1 CONTENDERS MATCH</td>
         <td><span class="winner-text hidden-spoil">THE GAUNT KNIGHT</span></td>
@@ -838,134 +1003,15 @@
             <span class="tooltip-text">Pas encore disponible</span>
           </div>
         </td>
-        <td>BOUNCE OF FURY 2026 (5)</td>
+        <td>BOUNCE OF FURY 2026</td>
         <td>THE GAUNT KNIGHT vs UKYO</td>
         <td>ATW TITLE MATCH</td>
-        <td><span class="winner-text hidden-spoil">THE GAUNT KNIGHT</span></td>
-      </tr>
-      <tr>
-        <td class="yt-col">
-          <div class="btn-yt-disabled-wrapper">
-            <div class="btn-yt-disabled"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-            <span class="tooltip-text">Pas encore disponible</span>
-          </div>
-        </td>
-        <td>ep 6</td>
-        <td>GHOSTBOY vs UKYO / GHOSTBOY vs THE GAUNT KNIGHT</td>
-        <td>normal match x2</td>
-        <td><span class="winner-text hidden-spoil">GHOSTBOY</span></td>
-      </tr>
-      <tr>
-        <td class="yt-col">
-          <div class="btn-yt-disabled-wrapper">
-            <div class="btn-yt-disabled"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-            <span class="tooltip-text">Pas encore disponible</span>
-          </div>
-        </td>
-        <td>ep 7</td>
-        <td>GHOSTBOY vs UKYO</td>
-        <td>NORMAL MATCH</td>
-        <td><span class="winner-text hidden-spoil">GHOSTBOY</span></td>
-      </tr>
-      <tr>
-        <td class="yt-col">
-          <div class="btn-yt-disabled-wrapper">
-            <div class="btn-yt-disabled"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-            <span class="tooltip-text">Pas encore disponible</span>
-          </div>
-        </td>
-        <td>ep 8</td>
-        <td>UKYO vs GHOSTBOY</td>
-        <td>EXTREME RULES</td>
-        <td><span class="winner-text hidden-spoil">UKYO</span></td>
-      </tr>
-      <tr>
-        <td class="yt-col">
-          <div class="btn-yt-disabled-wrapper">
-            <div class="btn-yt-disabled"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-            <span class="tooltip-text">Pas encore disponible</span>
-          </div>
-        </td>
-        <td>ep 9</td>
-        <td>UKYO vs GHOSTBOY</td>
         <td>???</td>
-        <td><span class="winner-text hidden-spoil">GHOSTBOY</span></td>
-      </tr>
-      <tr>
-        <td class="yt-col">
-          <div class="btn-yt-disabled-wrapper">
-            <div class="btn-yt-disabled"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-            <span class="tooltip-text">Pas encore disponible</span>
-          </div>
-        </td>
-        <td>ULTIMATE BATTLE 2026 (10)</td>
-        <td>GHOSTBOY vs THE GAUNT KNIGHT</td>
-        <td>ATW TITLE MATCH</td>
-        <td><span class="winner-text hidden-spoil">GHOSTBOY</span></td>
-      </tr>
-      <tr>
-        <td class="yt-col">
-          <div class="btn-yt-disabled-wrapper">
-            <div class="btn-yt-disabled"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-            <span class="tooltip-text">Pas encore disponible</span>
-          </div>
-        </td>
-        <td>ep 11</td>
-        <td>GHOSTBOY vs THE GAUNT KNIGHT</td>
-        <td>ATW TITLE MATCH</td>
-        <td><span class="winner-text hidden-spoil">GHOSTBOY</span></td>
-      </tr>
-      <tr>
-        <td class="yt-col">
-          <div class="btn-yt-disabled-wrapper">
-            <div class="btn-yt-disabled"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-            <span class="tooltip-text">Pas encore disponible</span>
-          </div>
-        </td>
-        <td>ep 12</td>
-        <td>GHOSTBOY vs THE GAUNT KNIGHT</td>
-        <td>???</td>
-        <td><span class="winner-text hidden-spoil">GHOSTBOY</span></td>
-      </tr>
-      <tr>
-        <td class="yt-col">
-          <div class="btn-yt-disabled-wrapper">
-            <div class="btn-yt-disabled"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-            <span class="tooltip-text">Pas encore disponible</span>
-          </div>
-        </td>
-        <td>ep 13</td>
-        <td>GHOSTBOY vs THE GAUNT KNIGHT</td>
-        <td>???</td>
-        <td><span class="winner-text hidden-spoil">THE GAUNT KNIGHT</span></td>
-      </tr>
-      <tr>
-        <td class="yt-col">
-          <div class="btn-yt-disabled-wrapper">
-            <div class="btn-yt-disabled"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-            <span class="tooltip-text">Pas encore disponible</span>
-          </div>
-        </td>
-        <td>ep 14</td>
-        <td>GHOSTBOY vs THE GAUNT KNIGHT</td>
-        <td>???</td>
-        <td><span class="winner-text hidden-spoil">GHOSTBOY</span></td>
-      </tr>
-      <tr>
-        <td class="yt-col">
-          <div class="btn-yt-disabled-wrapper">
-            <div class="btn-yt-disabled"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-            <span class="tooltip-text">Pas encore disponible</span>
-          </div>
-        </td>
-        <td>3rd CPV (15)</td>
-        <td>GHOSTBOY vs ???</td>
-        <td>ATW TITLE MATCH</td>
-        <td><span class="winner-text hidden-spoil">???</span></td>
       </tr>
     </tbody>
   </table>
 </section>
+                  
 
 <!-- TITRES -->
 <section id="title">
@@ -980,38 +1026,38 @@
     <div class="champion-banner">
       <div class="champion-info">
         <span class="badge-champ">CHAMPION EN TITRE</span>
-        <h2 class="champion-name">GHOSTBOY</h2>
-        <p class="champion-detail">Gagné lors de : <b>ULTIMATE BATTLE 2026 (Ép. 10)</b></p>
+        <h2 class="champion-name">UKYO</h2>
+        <p class="champion-detail">Gagné lors de : <b>Épisode 1 (Triple Threat Dog Fight Match)</b></p>
       </div>
-      <img src="images/ghostboy portrait.png" alt="Ghostboy" class="champion-img">
+      <img src="images/ukyo portrait.png" alt="Ukyo" class="champion-img">
     </div>
 
     <div class="timeline-title">Historique des Règnes</div>
     
     <div class="history-timeline">
       
-      <div class="timeline-item">
-        <div>
-          <span class="reign-num">1er Reign</span>
-          <span class="champ-holder">UKYO</span>
-        </div>
-        <span class="reign-event">Sacre à l'Épisode 2</span>
-      </div>
-
-      <div class="timeline-item">
-        <div>
-          <span class="reign-num">2ème Reign</span>
-          <span class="champ-holder">THE GAUNT KNIGHT</span>
-        </div>
-        <span class="reign-event">Sacre à Bounce Of Fury 2026</span>
-      </div>
-
       <div class="timeline-item" style="border-color: #ff0000; background: #2a1111;">
         <div>
-          <span class="reign-num">3ème Reign</span>
-          <span class="champ-holder">GHOSTBOY</span>
+          <span class="reign-num">1er Règne</span>
+          <span class="champ-holder">UKYO</span>
         </div>
-        <span class="reign-event">Sacre à Ultimate Battle 2026</span>
+        <span class="reign-event">Sacre à l'Épisode 1</span>
+      </div>
+
+      <div class="timeline-item">
+        <div>
+          <span class="reign-num">2ème Règne</span>
+          <span class="champ-holder">???</span>
+        </div>
+        <span class="reign-event">???</span>
+      </div>
+
+      <div class="timeline-item">
+        <div>
+          <span class="reign-num">3ème Règne</span>
+          <span class="champ-holder">???</span>
+        </div>
+        <span class="reign-event">???</span>
       </div>
 
     </div>
@@ -1032,42 +1078,205 @@
 <section id="galerie">
   <h1>Galerie</h1>
 
-  <div class="gallery-grid">
-    <div class="gallery-item">
-      <img src="images/atw_debut.png" alt="les débuts">
-      <p>Le Commencement</p>
+  <div class="gallery-layout">
+    <!-- BARRE LATÉRALE DE NAVIGATION RAPIDE PAR ÉPISODE -->
+    <div class="gallery-sidebar">
+      <a href="#galerie-ep1" class="gallery-nav-btn">1</a>
+      <span class="gallery-nav-dots">...</span>
+      <a href="#galerie-ep2" class="gallery-nav-btn">2</a>
+      <span class="gallery-nav-dots">...</span>
+      <a href="#galerie-ep3" class="gallery-nav-btn">3</a>
+      <span class="gallery-nav-dots">...</span>
+      <a href="#galerie-ep4" class="gallery-nav-btn">4</a>
     </div>
-    <div class="gallery-item">
-      <img src="images/atw championship.png" alt="ATW Championship">
-      <p>ATW Championship</p>
-    </div>
-    <div class="gallery-item">
-      <img src="images/ukyo get ready.png" alt="Ukyo get ready">
-      <p>Ukyo Arrive.</p>
-    </div>
-    <div class="gallery-item">
-      <img src="images/tgk rock n roll.png" alt="TGK Rock N Roll">
-      <p>Le Gaunt Knight est chaud.</p>
-    </div>
-    <div class="gallery-item">
-      <img src="images/ghostboy assis.png" alt="Ghostboy assis">
-      <p>Ghostboy est prêt.</p>
-    </div>
-    <div class="gallery-item">
-      <img src="images/ouch.png" alt="Ouch ATW">
-      <p>Flying Kick de Ghostboy sur Ukyo !</p>
-    </div>
-    <div class="gallery-item">
-      <img src="images/what a suplex.png" alt="Suplex ATW">
-      <p>German Suplex par le Gaunt Knight sur Ghostboy !</p>
-    </div>
-    <div class="gallery-item">
-      <img src="images/kick.png" alt="Kick">
-      <p>Le Gaunt Knight envoie un Kick dans la face de Ukyo !</p>
-    </div>
-    <div class="gallery-item">
-      <img src="images/and neeew.png" alt="And New Champion">
-      <p>Et Ukyo remporte le titre !</p>
+
+    <!-- CONTENU DE LA GALERIE -->
+    <div class="gallery-content-area">
+      <!-- ÉPISODE 1 -->
+      <div id="galerie-ep1" class="gallery-episode-section">
+        <h2 class="gallery-episode-title">Épisode 1</h2>
+        <div class="gallery-grid">
+          <div class="gallery-item">
+            <img src="images/atw_debut.png" alt="Le Commencement">
+            <p>Le Commencement</p>
+          </div>
+          <div class="gallery-item">
+            <img src="images/atw championship.png" alt="ATW Championship">
+            <p>ATW Championship</p>
+          </div>
+          <div class="gallery-item">
+            <img src="images/ukyo get ready.png" alt="Ukyo Arrive.">
+            <p>Ukyo Arrive.</p>
+          </div>
+          <div class="gallery-item">
+            <img src="images/tgk rock n roll.png" alt="Le Gaunt Knight est chaud.">
+            <p>Le Gaunt Knight est chaud.</p>
+          </div>
+          <div class="gallery-item">
+            <img src="images/ghostboy assis.png" alt="Ghostboy est prêt.">
+            <p>Ghostboy est prêt.</p>
+          </div>
+          <div class="gallery-item">
+            <img src="images/ouch.png" alt="Flying Kick de Ghostboy sur Ukyo !">
+            <p>Flying Kick de Ghostboy sur Ukyo !</p>
+          </div>
+          <div class="gallery-item">
+            <img src="images/what a suplex.png" alt="German Suplex par le Gaunt Knight sur Ghostboy !">
+            <p>German Suplex par le Gaunt Knight sur Ghostboy !</p>
+          </div>
+          <div class="gallery-item">
+            <img src="images/kick.png" alt="Le Gaunt Knight envoie un Kick dans la face de Ukyo !">
+            <p>Le Gaunt Knight envoie un Kick dans la face de Ukyo !</p>
+          </div>
+          <div class="gallery-item">
+            <img src="images/and neeew.png" alt="Et Ukyo remporte le titre !">
+            <p>Et Ukyo remporte le titre !</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ÉPISODE 2 -->
+      <div id="galerie-ep2" class="gallery-episode-section">
+        <h2 class="gallery-episode-title">Épisode 2</h2>
+        <div class="gallery-grid">
+          <div class="gallery-item">
+            <img src="images/ukyo celebre.png" alt="Ukyo célèbre sa victoire.">
+            <p>Ukyo célèbre sa victoire.</p>
+          </div>
+          <div class="gallery-item">
+            <img src="images/ghostboy intervien.png" alt="Ghostboy intervient">
+            <p>Ghostboy intervient</p>
+          </div>
+          <div class="gallery-item">
+            <img src="images/face to face.png" alt="Un match se prépare.">
+            <p>Un match se prépare.</p>
+          </div>
+          <div class="gallery-item">
+            <img src="images/falling in reverse.png" alt="FALLING IN REVERSE par Ukyo !">
+            <p>FALLING IN REVERSE par Ukyo !</p>
+          </div>
+          <div class="gallery-item">
+            <img src="images/une musique d'inconnu.png" alt="Un theme song inconnu !?">
+            <p>Un theme song inconnu !?</p>
+          </div>
+          <div class="gallery-item">
+            <img src="images/le match continu.png" alt="Mais le match continue !">
+            <p>Mais le match continue !</p>
+          </div>
+          <div class="gallery-item">
+            <img src="images/ukyo victoire.png" alt="Et Ukyo remporte la victoire !">
+            <p>Et Ukyo remporte la victoire !</p>
+          </div>
+          <div class="gallery-item">
+            <img src="images/C'ETAIT LE GAUNT KNIGHT.png" alt="C'ETAIT LA MUSIQUE DU GAUNT KNIGHT !">
+            <p>C'ETAIT LA MUSIQUE DU GAUNT KNIGHT !</p>
+          </div>
+          <div class="gallery-item">
+            <img src="images/rko.png" alt="WHAT A CUTTER !">
+            <p>WHAT A CUTTER !</p>
+          </div>
+          <div class="gallery-item">
+            <img src="images/ghostboy arrive.png" alt="Ghostboy vient aider Ukyo !">
+            <p>Ghostboy vient aider Ukyo !</p>
+          </div>
+          <div class="gallery-item">
+            <img src="images/kitw.png" alt="KISSES IN THE WIND !">
+            <p>KISSES IN THE WIND !</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ÉPISODE 3 -->
+      <div id="galerie-ep3" class="gallery-episode-section">
+        <h2 class="gallery-episode-title">Épisode 3</h2>
+        <div class="gallery-grid">
+          <div class="gallery-item">
+            <img src="images/ukyo remerciment.png" alt="Ukyo remercie Ghostboy pour son aide.">
+            <p>Ukyo remercie Ghostboy pour son aide.</p>
+          </div>
+          <div class="gallery-item">
+            <img src="images/tgk mechant.png" alt="TGK lui dit qu'il a parlé au patron pour avoir un match.">
+            <p>TGK lui dit qu'il a parlé au patron pour avoir un match.</p>
+          </div>
+          <div class="gallery-item">
+            <img src="images/entrées.png" alt="Les bouncers font leurs entrées.">
+            <p>Les bouncers font leurs entrées.</p>
+          </div>
+          <div class="gallery-item">
+            <img src="images/triple suplex.png" alt="TGK enchaîne 3 suplex !">
+            <p>TGK enchaîne 3 suplex !</p>
+          </div>
+          <div class="gallery-item">
+            <img src="images/front.png" alt="La rage augmente des deux côtés.">
+            <p>La rage augmente des deux côtés.</p>
+          </div>
+          <div class="gallery-item">
+            <img src="images/double clothline.png" alt="DOUBLE CLOTHLINE !">
+            <p>DOUBLE CLOTHLINE !</p> 
+            <p><h6><i>(ah bah là ils sont k.o)</i></h6></p>
+          </div>
+          <div class="gallery-item">
+            <img src="images/plateau dans face.png" alt="Ukyo se prend un plateau en pleine face !">
+            <p>Ukyo se prend un plateau en pleine face !</p>
+          </div>
+          <div class="gallery-item">
+            <img src="images/fir tgk.png" alt="Ukyo envoie son FALLING IN REVERSE !">
+            <p>Ukyo envoie son FALLING IN REVERSE !</p>
+          </div>
+          <div class="gallery-item">
+            <img src="images/3eme victoire.png" alt="Et il remporte sa 3ème victoire !">
+            <p>Et il remporte sa 3ème victoire !</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ÉPISODE 4 -->
+      <div id="galerie-ep4" class="gallery-episode-section">
+        <h2 class="gallery-episode-title">Épisode 4</h2>
+        <div class="gallery-grid">
+          <div class="gallery-item">
+            <img src="images/ukyo contrat.png" alt="Ukyo annonce le match suivant : GHOSTBOY VS TGK pour un match à BOUNCE OF FURY !">
+            <p>Ukyo annonce le match suivant : GHOSTBOY VS TGK pour un match à BOUNCE OF FURY !</p>
+          </div>
+          <div class="gallery-item">
+            <img src="images/entrance.png" alt="Ils sont prêts.">
+            <p>Ils sont prêts.</p>
+          </div>
+          <div class="gallery-item">
+            <img src="images/ukyo chips.png" alt="Ukyo vient regarder le match avec des chips">
+            <p>Ukyo vient regarder le match avec des chips</p>
+          </div>
+          <div class="gallery-item">
+            <img src="images/debut de match.png" alt="Le match commence fort !">
+            <p>Le match commence fort !</p>
+          </div>
+          <div class="gallery-item">
+            <img src="images/powerbomb.png" alt="TGK envoie Ghostboy valser en powerbomb !">
+            <p>TGK envoie Ghostboy valser en powerbomb !</p>
+          </div>
+          <div class="gallery-item">
+            <img src="images/suplex.png" alt="Mais Ghostboy se laisse pas faire et envoie une suplex !">
+            <p>Mais Ghostboy se laisse pas faire et envoie une suplex !</p>
+            <p><h6><i>(évidemment c'est ATW)</i></h6></p>
+          </div>
+          <div class="gallery-item">
+            <img src="images/tof.png" alt="TWIST OF FATE !">
+            <p>TWIST OF FATE !</p>
+          </div>
+          <div class="gallery-item">
+            <img src="images/JUMP.png" alt="Et il saute sur le Gaunt Knight !">
+            <p>Et il saute sur le Gaunt Knight !</p>
+          </div>
+          <div class="gallery-item">
+            <img src="images/magic sword.png" alt="Mais TGK reprend des forces et met Ghostboy K.O avec son magic sword !">
+            <p>Mais TGK reprend des forces et met Ghostboy K.O avec son magic sword !</p>
+          </div>
+          <div class="gallery-item">
+            <img src="images/tgk contrat.png" alt="Et il remporte la victoire pour affronter Ukyo à BOUNCE OF FURY !">
+            <p>Et il remporte la victoire pour affronter Ukyo à BOUNCE OF FURY !</p>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -1099,7 +1308,7 @@
     <div class="news-card">
       <div class="news-date">RETOUR</div>
       <h3 class="news-title">Le Trailer De BOUNCE OF FURY 2026 Sort Bientôt !</h3>
-      <p>En effet dés que le CPV est tourner, le trailer pourras etre finaliser est sortir.</p>
+      <p>En effet dès que le CPV est tourné, le trailer pourra être finalisé et sortir.</p>
     </div>
 
   </div>
@@ -1129,6 +1338,17 @@
       btn.style.color = '#ff0000';
     }
   }
+
+  // Animation smooth pour grossir/réduire les images au clic
+  document.querySelectorAll('.gallery-item img').forEach(img => {
+    img.addEventListener('click', () => {
+      // Optionnel : fermer les autres images ouvertes
+      document.querySelectorAll('.gallery-item img').forEach(other => {
+        if (other !== img) other.classList.remove('zoomed');
+      });
+      img.classList.toggle('zoomed');
+    });
+  });
 </script>
 
 </body>

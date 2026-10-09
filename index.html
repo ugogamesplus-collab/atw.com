@@ -17,6 +17,81 @@
       color: #fff;
       letter-spacing: 0.5px;
     }
+
+    /* --- POP-UP D'ENTRÉE --- */
+    #welcome-popup {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(10, 10, 10, 0.6);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      z-index: 9999;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: opacity 0.4s ease, visibility 0.4s ease;
+    }
+
+    #welcome-popup.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .popup-box {
+      background: linear-gradient(145deg, #1f1f1f, #111111);
+      border: 3px solid #ff0000;
+      border-radius: 16px;
+      padding: 40px 30px;
+      text-align: center;
+      max-width: 450px;
+      width: 90%;
+      box-shadow: 0 0 40px rgba(255, 0, 0, 0.6), inset 0 0 20px rgba(255, 136, 0, 0.2);
+      position: relative;
+    }
+
+    .popup-logo {
+      max-width: 120px;
+      width: 60%;
+      height: auto;
+      margin-bottom: 20px;
+      filter: drop-shadow(0 0 20px rgba(255, 0, 0, 0.8));
+    }
+
+    .popup-title {
+      font-size: 1.8rem;
+      text-transform: uppercase;
+      margin-bottom: 30px;
+      color: #fff;
+      text-shadow: 0 0 10px rgba(255, 136, 0, 0.5);
+      letter-spacing: 1px;
+    }
+
+    .btn-enter {
+      background: linear-gradient(135deg, #ff0000, #cc0000);
+      color: #fff;
+      border: 2px solid #ff8800;
+      padding: 14px 35px;
+      font-size: 1.2rem;
+      font-weight: 700;
+      font-family: 'Oswald', Arial, sans-serif;
+      text-transform: uppercase;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 0 20px rgba(255, 0, 0, 0.6);
+      transition: all 0.25s ease-in-out;
+    }
+
+    .btn-enter:hover {
+      background: linear-gradient(135deg, #ff8800, #cc5500);
+      border-color: #ff0000;
+      color: #000;
+      box-shadow: 0 0 30px rgba(255, 136, 0, 0.9);
+      transform: translateY(-3px);
+    }
     
     /* HERO / ACCUEIL */
     #accueil {
@@ -700,11 +775,18 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 0;
+      gap: 25px;
+      flex-wrap: wrap;
       margin-top: 30px;
       position: relative;
       padding: 20px 0;
-      min-height: 520px;
+    }
+
+    .tcg-card-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
     }
 
     .tcg-card {
@@ -718,7 +800,7 @@
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8);
       position: relative;
       width: 280px;
-      transition: transform 0.4s ease-in-out, z-index 0.4s ease-in-out, border-color 0.3s, box-shadow 0.3s;
+      transition: transform 0.4s ease-in-out, border-color 0.3s, box-shadow 0.3s;
     }
 
     .tcg-header {
@@ -747,6 +829,90 @@
       letter-spacing: 1px;
     }
 
+    /* --- VRAI LECTEUR DE MUSIQUE SOUS LES CARTES --- */
+    .music-player-box {
+      background: linear-gradient(145deg, #181818, #0d0d0d);
+      border: 2px solid #ff0000;
+      border-radius: 10px;
+      padding: 12px;
+      width: 280px;
+      box-sizing: border-box;
+      box-shadow: 0 0 15px rgba(255, 0, 0, 0.3);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .player-controls {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .player-btn {
+      background: linear-gradient(135deg, #2a2a2a, #111);
+      border: 1px solid #ff0000;
+      color: #fff;
+      width: 36px;
+      height: 32px;
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: inset 0 0 5px rgba(255,255,255,0.1);
+      transition: all 0.2s ease;
+    }
+
+    .player-btn:hover {
+      background: #ff8800;
+      border-color: #ff8800;
+      color: #000;
+      box-shadow: 0 0 10px rgba(255, 136, 0, 0.7);
+    }
+
+    .player-btn svg {
+      width: 14px;
+      height: 14px;
+      fill: currentColor;
+    }
+
+    .player-progress-container {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .player-time-info {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      color: #aaa;
+      font-family: Arial, sans-serif;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 6px;
+      background: #333;
+      border-radius: 3px;
+      outline: none;
+      appearance: none;
+      cursor: pointer;
+      accent-color: #ff0000;
+    }
+
+    .progress-bar::-webkit-slider-thumb {
+      appearance: none;
+      width: 12px;
+      height: 12px;
+      background: #ff8800;
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: 0 0 6px rgba(255, 136, 0, 0.8);
+    }
+
     .tcg-img-container {
       width: 100%;
       height: 220px;
@@ -771,10 +937,17 @@
     }
 
     .card-ukyo {
-      z-index: 3;
       border-color: #ffc400;
       box-shadow: 0 0 25px rgba(255, 196, 0, 0.4);
       background: linear-gradient(145deg, #242012, #141414);
+    }
+
+    .card-ukyo + .music-player-box {
+      border-color: #ffc400;
+      box-shadow: 0 0 15px rgba(255, 196, 0, 0.3);
+    }
+    .card-ukyo + .music-player-box .progress-bar {
+      accent-color: #ffc400;
     }
 
     .tcg-belt-container {
@@ -792,32 +965,20 @@
       object-fit: contain;
     }
 
-    .card-ghostboy {
-      z-index: 1;
-      transform: translateX(-35px) scale(0.95);
-    }
-    .card-tgk {
-      z-index: 1;
-      transform: translateX(35px) scale(0.95);
-    }
-
     .card-ghostboy:hover {
-      transform: translateX(-35px) translateY(-10px) scale(1.03);
-      z-index: 5;
+      transform: translateY(-10px) scale(1.03);
       border-color: #ff0000;
       box-shadow: 0 0 25px rgba(255, 0, 0, 0.6);
     }
 
     .card-tgk:hover {
-      transform: translateX(35px) translateY(-10px) scale(1.03);
-      z-index: 5;
+      transform: translateY(-10px) scale(1.03);
       border-color: #ff0000;
       box-shadow: 0 0 25px rgba(255, 0, 0, 0.6);
     }
 
     .card-ukyo:hover {
       transform: translateY(-10px) scale(1.05);
-      z-index: 5;
       border-color: #ffc400;
       box-shadow: 0 0 30px rgba(255, 196, 0, 0.7);
     }
@@ -850,6 +1011,15 @@
 </head>
 
 <body>
+
+<!-- POP-UP D'ENTRÉE -->
+<div id="welcome-popup">
+  <div class="popup-box">
+    <img src="images/ATW BLANC.png" alt="ATW Logo" class="popup-logo">
+    <h2 class="popup-title">Bienvenue sur le site d'ATW</h2>
+    <button class="btn-enter" onclick="closePopup()">Entrer</button>
+  </div>
+</div>
 
 <!-- ACCUEIL / HERO -->
 <header id="accueil">
@@ -895,98 +1065,169 @@
   <h1>Roster ATW — Bouncers</h1>
 
   <div class="roster-grid-tcg">
-    <!-- CARTE GHOSTBOY -->
-    <div class="tcg-card card-ghostboy">
-      <div class="tcg-header">
-        <h2 class="tcg-name">GHOSTBOY</h2>
-        <span class="tcg-record">8 - 5</span>
-      </div>
-      <div class="tcg-img-container" style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)), url('images/atw fire.jpeg'); background-size: cover; background-position: center;">
-        <img src="images/ghostboy portrait.png" alt="GHOSTBOY">
-      </div>
-      <div class="tcg-info">
-        <p>Style : <b>Agile / Mystérieux</b></p>
-        <p>Finisher : <b>Kisses In The Wind</b></p>
-        <p>Coup Spécial : <b>GhostBuster</b></p>
-      </div>
-      <div class="tcg-stats">
-        <div class="stat-row">
-          <span class="stat-label">AGILITÉ</span>
-          <div class="stat-bar-bg"><div class="stat-bar-fill" style="width: 90%;"></div></div>
+    
+    <!-- CARTE GHOSTBOY + LECTEUR -->
+    <div class="tcg-card-wrapper">
+      <div class="tcg-card card-ghostboy">
+        <div class="tcg-header">
+          <h2 class="tcg-name">GHOSTBOY</h2>
+          <span class="tcg-record">8 - 5</span>
         </div>
-        <div class="stat-row">
-          <span class="stat-label">TECHNIC</span>
-          <div class="stat-bar-bg"><div class="stat-bar-fill" style="width: 75%;"></div></div>
+        <div class="tcg-img-container" style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)), url('images/atw fire.jpeg'); background-size: cover; background-position: center;">
+          <img src="images/ghostboy portrait.png" alt="GHOSTBOY">
         </div>
-        <div class="stat-row">
-          <span class="stat-label">FORCE</span>
-          <div class="stat-bar-bg"><div class="stat-bar-fill" style="width: 60%;"></div></div>
+        <div class="tcg-info">
+          <p>Style : <b>Agile / Mystérieux</b></p>
+          <p>Finisher : <b>Kisses In The Wind</b></p>
+          <p>Coup Spécial : <b>GhostBuster</b></p>
+        </div>
+        <div class="tcg-stats">
+          <div class="stat-row">
+            <span class="stat-label">AGILITÉ</span>
+            <div class="stat-bar-bg"><div class="stat-bar-fill" style="width: 90%;"></div></div>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">TECHNIC</span>
+            <div class="stat-bar-bg"><div class="stat-bar-fill" style="width: 75%;"></div></div>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">FORCE</span>
+            <div class="stat-bar-bg"><div class="stat-bar-fill" style="width: 60%;"></div></div>
+          </div>
         </div>
       </div>
-    </div>
-
-    <!-- CARTE UKYO -->
-    <div class="tcg-card card-ukyo">
-      <div class="tcg-header">
-        <h2 class="tcg-name">UKYO</h2>
-        <div class="tcg-belt-container">
-          <img src="images/titre.png" alt="Champion Belt" class="tcg-belt">
+      <!-- Lecteur Audio -->
+      <div class="music-player-box" id="player-ghostboy">
+        <div class="player-controls">
+          <button class="player-btn" onclick="audioPlayers.ghostboy.play()" title="Play">
+            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          </button>
+          <button class="player-btn" onclick="audioPlayers.ghostboy.pause()" title="Pause">
+            <svg viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+          </button>
+          <button class="player-btn" onclick="audioPlayers.ghostboy.stop()" title="Stop">
+            <svg viewBox="0 0 24 24"><path d="M6 6h12v12H6z"/></svg>
+          </button>
         </div>
-        <span class="tcg-record">4 - 4</span>
-      </div>
-      <div class="tcg-img-container" style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)), url('images/atw fire.jpeg'); background-size: cover; background-position: center;">
-        <img src="images/ukyo portrait.png" alt="UKYO">
-      </div>
-      <div class="tcg-info">
-        <p>Style : <b>Lucha / Highflyer</b></p>
-        <p>Finisher : <b>Starblast</b></p>
-        <p>Coup Spécial : <b>Sink or Swim</b></p>
-      </div>
-      <div class="tcg-stats">
-        <div class="stat-row">
-          <span class="stat-label">VOL</span>
-          <div class="stat-bar-bg"><div class="stat-bar-fill" style="width: 90%;"></div></div>
-        </div>
-        <div class="stat-row">
-          <span class="stat-label">VICE</span>
-          <div class="stat-bar-bg"><div class="stat-bar-fill" style="width: 67%;"></div></div>
-        </div>
-        <div class="stat-row">
-          <span class="stat-label">FORCE</span>
-          <div class="stat-bar-bg"><div class="stat-bar-fill" style="width: 20%;"></div></div>
+        <div class="player-progress-container">
+          <div class="player-time-info">
+            <span id="current-ghostboy">0:00</span>
+            <span id="duration-ghostboy">0:00</span>
+          </div>
+          <input type="range" class="progress-bar" id="seek-ghostboy" value="0" max="100" step="0.1" oninput="audioPlayers.ghostboy.seek(this.value)">
         </div>
       </div>
     </div>
 
-    <!-- CARTE THE GAUNT KNIGHT -->
-    <div class="tcg-card card-tgk">
-      <div class="tcg-header">
-        <h2 class="tcg-name">THE GAUNT KNIGHT</h2>
-        <span class="tcg-record">3 - 7</span>
-      </div>
-      <div class="tcg-img-container" style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)), url('images/atw fire.jpeg'); background-size: cover; background-position: center;">
-        <img src="images/tgk portrait.png" alt="THE GAUNT KNIGHT">
-      </div>
-      <div class="tcg-info">
-        <p>Style : <b>Warrior / Powerful</b></p>
-        <p>Finisher : <b>Oblivion Gates</b></p>
-        <p>Coup Spécial : <b>Magic Sword</b></p>
-      </div>
-      <div class="tcg-stats">
-        <div class="stat-row">
-          <span class="stat-label">FORCE</span>
-          <div class="stat-bar-bg"><div class="stat-bar-fill" style="width: 85%;"></div></div>
+    <!-- CARTE UKYO + LECTEUR -->
+    <div class="tcg-card-wrapper">
+      <div class="tcg-card card-ukyo">
+        <div class="tcg-header">
+          <h2 class="tcg-name">UKYO</h2>
+          <div class="tcg-belt-container">
+            <img src="images/titre.png" alt="Champion Belt" class="tcg-belt">
+          </div>
+          <span class="tcg-record">4 - 4</span>
         </div>
-        <div class="stat-row">
-          <span class="stat-label"></span>
-          <div class="stat-bar-bg"><div class="stat-bar-fill" style="width: 0%;"></div></div>
+        <div class="tcg-img-container" style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)), url('images/atw fire.jpeg'); background-size: cover; background-position: center;">
+          <img src="images/ukyo portrait.png" alt="UKYO">
         </div>
-        <div class="stat-row">
-          <span class="stat-label">RAGE</span>
-          <div class="stat-bar-bg"><div class="stat-bar-fill" style="width: 70%;"></div></div>
+        <div class="tcg-info">
+          <p>Style : <b>Lucha / Highflyer</b></p>
+          <p>Finisher : <b>Starblast</b></p>
+          <p>Coup Spécial : <b>Sink or Swim</b></p>
+        </div>
+        <div class="tcg-stats">
+          <div class="stat-row">
+            <span class="stat-label">VOL</span>
+            <div class="stat-bar-bg"><div class="stat-bar-fill" style="width: 90%;"></div></div>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">VICE</span>
+            <div class="stat-bar-bg"><div class="stat-bar-fill" style="width: 67%;"></div></div>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">FORCE</span>
+            <div class="stat-bar-bg"><div class="stat-bar-fill" style="width: 20%;"></div></div>
+          </div>
+        </div>
+      </div>
+      <!-- Lecteur Audio -->
+      <div class="music-player-box" id="player-ukyo">
+        <div class="player-controls">
+          <button class="player-btn" onclick="audioPlayers.ukyo.play()" title="Play">
+            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          </button>
+          <button class="player-btn" onclick="audioPlayers.ukyo.pause()" title="Pause">
+            <svg viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+          </button>
+          <button class="player-btn" onclick="audioPlayers.ukyo.stop()" title="Stop">
+            <svg viewBox="0 0 24 24"><path d="M6 6h12v12H6z"/></svg>
+          </button>
+        </div>
+        <div class="player-progress-container">
+          <div class="player-time-info">
+            <span id="current-ukyo">0:00</span>
+            <span id="duration-ukyo">0:00</span>
+          </div>
+          <input type="range" class="progress-bar" id="seek-ukyo" value="0" max="100" step="0.1" oninput="audioPlayers.ukyo.seek(this.value)">
         </div>
       </div>
     </div>
+
+    <!-- CARTE THE GAUNT KNIGHT + LECTEUR -->
+    <div class="tcg-card-wrapper">
+      <div class="tcg-card card-tgk">
+        <div class="tcg-header">
+          <h2 class="tcg-name">THE GAUNT KNIGHT</h2>
+          <span class="tcg-record">3 - 7</span>
+        </div>
+        <div class="tcg-img-container" style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)), url('images/atw fire.jpeg'); background-size: cover; background-position: center;">
+          <img src="images/tgk portrait.png" alt="THE GAUNT KNIGHT">
+        </div>
+        <div class="tcg-info">
+          <p>Style : <b>Warrior / Powerful</b></p>
+          <p>Finisher : <b>Oblivion Gates</b></p>
+          <p>Coup Spécial : <b>Magic Sword</b></p>
+        </div>
+        <div class="tcg-stats">
+          <div class="stat-row">
+            <span class="stat-label">FORCE</span>
+            <div class="stat-bar-bg"><div class="stat-bar-fill" style="width: 85%;"></div></div>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label"></span>
+            <div class="stat-bar-bg"><div class="stat-bar-fill" style="width: 0%;"></div></div>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">RAGE</span>
+            <div class="stat-bar-bg"><div class="stat-bar-fill" style="width: 70%;"></div></div>
+          </div>
+        </div>
+      </div>
+      <!-- Lecteur Audio -->
+      <div class="music-player-box" id="player-tgk">
+        <div class="player-controls">
+          <button class="player-btn" onclick="audioPlayers.tgk.play()" title="Play">
+            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          </button>
+          <button class="player-btn" onclick="audioPlayers.tgk.pause()" title="Pause">
+            <svg viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+          </button>
+          <button class="player-btn" onclick="audioPlayers.tgk.stop()" title="Stop">
+            <svg viewBox="0 0 24 24"><path d="M6 6h12v12H6z"/></svg>
+          </button>
+        </div>
+        <div class="player-progress-container">
+          <div class="player-time-info">
+            <span id="current-tgk">0:00</span>
+            <span id="duration-tgk">0:00</span>
+          </div>
+          <input type="range" class="progress-bar" id="seek-tgk" value="0" max="100" step="0.1" oninput="audioPlayers.tgk.seek(this.value)">
+        </div>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -1331,7 +1572,7 @@
         <h3 class="news-title">Bounce Of Fury Reporté À 2026 !</h3>
         <p>Initialement prévu pour 2025, le Pay-Per-View majeur de l'ATW est officiellement repoussé à 2026. La direction promet un show historique pour compenser cette attente.</p>
       </div>
-      <img src="images/news1.png" alt="News Image" class="news-image">
+      <img src="images/2025 to 2026.png" alt="News Image" class="news-image">
     </div>
 
     <div class="news-card">
@@ -1340,16 +1581,7 @@
         <h3 class="news-title">Une Nouvelle Arène Dévoilée À Bounce Of Fury</h3>
         <p>C'est confirmé : l’ATW s'agrandit. Le lieu de combat officiel change d'échelle et sera présenté en exclusivité lors de Bounce Of Fury 2026.</p>
       </div>
-      <img src="images/news2.png" alt="News Image" class="news-image">
-    </div>
-
-    <div class="news-card">
-      <div class="news-content">
-        <div class="news-date">DEBAT</div>
-        <h3 class="news-title">L'ATW : Pire Fédé De L'Histoire Ou Génie Incompris ?</h3>
-        <p>Entre chaos en coulisses, rivalités explosives et gestion douteuse, les avis se déchirent. L'ATW continue de diviser mais reste impossible à ignorer.</p>
-      </div>
-      <img src="images/news3.png" alt="News Image" class="news-image">
+      <img src="images/new arena.png" alt="News Image" class="news-image">
     </div>
 
     <div class="news-card">
@@ -1358,7 +1590,7 @@
         <h3 class="news-title">Le Trailer De BOUNCE OF FURY 2026 Sort Bientôt !</h3>
         <p>En effet dès que le CPV est tourné, le trailer pourra être finalisé et sortir.</p>
       </div>
-      <img src="images/news4.png" alt="News Image" class="news-image">
+      <img src="images/boflogo.png" alt="News Image" class="news-image">
     </div>
   </div>
 </section>
@@ -1368,6 +1600,88 @@
 </footer>
 
 <script>
+  // Fonction pour fermer le pop-up et déflouter
+  function closePopup() {
+    const popup = document.getElementById('welcome-popup');
+    if (popup) {
+      popup.classList.add('hidden');
+    }
+  }
+
+  // Classe pour gérer un lecteur de musique complet
+  class MusicPlayer {
+    constructor(audioSrc, idPrefix) {
+      this.audio = new Audio(audioSrc);
+      this.audio.volume = 0.4;
+      this.idPrefix = idPrefix;
+
+      this.currentEl = document.getElementById(`current-${idPrefix}`);
+      this.durationEl = document.getElementById(`duration-${idPrefix}`);
+      this.seekEl = document.getElementById(`seek-${idPrefix}`);
+
+      this.audio.addEventListener('loadedmetadata', () => {
+        this.durationEl.textContent = this.formatTime(this.audio.duration);
+      });
+
+      this.audio.addEventListener('timeupdate', () => {
+        if (!this.isSeeking) {
+          this.currentEl.textContent = this.formatTime(this.audio.currentTime);
+          if (this.audio.duration > 0) {
+            this.seekEl.value = (this.audio.currentTime / this.audio.duration) * 100;
+          }
+        }
+      });
+
+      this.audio.addEventListener('ended', () => {
+        this.stop();
+      });
+
+      this.isSeeking = false;
+    }
+
+    play() {
+      // Coupe les autres lecteurs avant de lancer celui-ci
+      for (let key in audioPlayers) {
+        if (audioPlayers[key] !== this) {
+          audioPlayers[key].pause();
+        }
+      }
+      this.audio.play().catch(e => {});
+    }
+
+    pause() {
+      this.audio.pause();
+    }
+
+    stop() {
+      this.audio.pause();
+      this.audio.currentTime = 0;
+      this.currentEl.textContent = "0:00";
+      this.seekEl.value = 0;
+    }
+
+    seek(value) {
+      this.isSeeking = true;
+      if (this.audio.duration) {
+        this.audio.currentTime = (value / 100) * this.audio.duration;
+      }
+      this.isSeeking = false;
+    }
+
+    formatTime(seconds) {
+      const mins = Math.floor(seconds / 60);
+      const secs = Math.floor(seconds % 60);
+      return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+    }
+  }
+
+  // Initialisation des 3 lecteurs
+  const audioPlayers = {
+    ghostboy: new MusicPlayer('sons/ghostboy-theme.mp3', 'ghostboy'),
+    ukyo: new MusicPlayer('sons/ukyo-theme.mp3', 'ukyo'),
+    tgk: new MusicPlayer('sons/tgk-theme.mp3', 'tgk')
+  };
+
   // Fonction de woosh léger au survol (généré synthétiquement)
   function playHoverWoosh() {
     try {
@@ -1418,18 +1732,18 @@
   // Sons depuis le dossier 'sons'
   function playCameraSound() {
     const sound = new Audio('sons/photo.mp3');
-    sound.volume = 0.15; // Volume baissé pour ne pas faire peur
+    sound.volume = 0.15;
     sound.play().catch(e => {});
   }
 
   function playDingDingDing() {
     const sound = new Audio('sons/cloche.mp3');
-    sound.volume = 0.5;
+    sound.volume = 0.1;
     sound.play().catch(e => {});
   }
 
-  // Application des écouteurs sur tous les éléments interactifs (boutons, liens, cartes TCG, etc.)
-  const interactiveElements = document.querySelectorAll('a, button, .tcg-card, .news-card, .gallery-item');
+  // Application des écouteurs sur tous les éléments interactifs
+  const interactiveElements = document.querySelectorAll('a, button:not(.player-btn), .tcg-card, .news-card, .gallery-item');
   interactiveElements.forEach(element => {
     element.addEventListener('click', playClickPop);
     element.addEventListener('mouseenter', playHoverWoosh);
@@ -1438,7 +1752,7 @@
   // Son d'appareil photo sur les images de la galerie
   document.querySelectorAll('.gallery-item img').forEach(img => {
     img.addEventListener('click', (e) => {
-      e.stopPropagation(); // Évite de doubler le clic avec .gallery-item
+      e.stopPropagation();
       playCameraSound();
       document.querySelectorAll('.gallery-item img').forEach(other => {
         if (other !== img) other.classList.remove('zoomed');
@@ -1472,7 +1786,7 @@
     }
   }
 
-  // TIMER YOUTUBE (13 septembre 2025 à 20:00)
+  // TIMER YOUTUBE
   function updateTimer() {
     const lastVideoDate = new Date('2025-09-13T20:00:00');
     const now = new Date();

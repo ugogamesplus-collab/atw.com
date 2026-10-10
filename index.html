@@ -18,6 +18,38 @@
       letter-spacing: 0.5px;
     }
 
+    /* --- ANIMATIONS DE TREMBLEMENT --- */
+    @keyframes shakeHorizontal {
+      0% { transform: translateX(0); }
+      20% { transform: translateX(-8px); }
+      40% { transform: translateX(8px); }
+      60% { transform: translateX(-6px); }
+      80% { transform: translateX(6px); }
+      100% { transform: translateX(0); }
+    }
+
+    @keyframes shakeVertical {
+      0% { transform: translateY(0); }
+      20% { transform: translateY(-8px); }
+      40% { transform: translateY(8px); }
+      60% { transform: translateY(-6px); }
+      80% { transform: translateY(6px); }
+      100% { transform: translateY(0); }
+    }
+
+    .shake-page-x {
+      animation: shakeHorizontal 0.4s ease-in-out;
+    }
+    .shake-page-y {
+      animation: shakeVertical 0.4s ease-in-out;
+    }
+    .shake-logo-x {
+      animation: shakeHorizontal 0.4s ease-in-out;
+    }
+    .shake-logo-y {
+      animation: shakeVertical 0.4s ease-in-out;
+    }
+
     /* --- POP-UP D'ENTRÉE --- */
     #welcome-popup {
       position: fixed;
@@ -95,7 +127,7 @@
     
     /* HERO / ACCUEIL */
     #accueil {
-      height: 100vh;
+      min-height: 100vh;
       box-sizing: border-box;
       display: flex;
       flex-direction: column;
@@ -151,7 +183,7 @@
     .hero-subtitle {
       font-size: 20px;
       color: #aaa;
-      margin-bottom: 35px;
+      margin-bottom: 25px;
       text-transform: uppercase;
       letter-spacing: 2px;
     }
@@ -163,6 +195,7 @@
       justify-content: center;
       gap: 15px;
       max-width: 900px;
+      margin-bottom: 20px;
     }
     .btn-nav {
       background: #1a1a1a;
@@ -183,6 +216,37 @@
       color: #000;
       box-shadow: 0 0 20px rgba(255, 136, 0, 0.8);
       transform: translateY(-3px);
+    }
+
+    /* BOUTONS RÉSEAUX SOCIAUX AVEC FOND ROUGE */
+    .social-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 10px;
+    }
+    .btn-social {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      background: #ff0000;
+      border: 2px solid #ff8800;
+      border-radius: 50%;
+      box-shadow: 0 0 10px rgba(255, 0, 0, 0.4);
+      transition: all 0.25s ease-in-out;
+    }
+    .btn-social:hover {
+      background: #ff8800;
+      border-color: #ff0000;
+      box-shadow: 0 0 20px rgba(255, 136, 0, 0.8);
+      transform: translateY(-3px);
+    }
+    .btn-social img {
+      width: 22px;
+      height: 22px;
+      object-fit: contain;
     }
 
     /* SECTION LAYOUT */
@@ -768,6 +832,64 @@
       margin-top: 40px;
       border-top: 1px solid #333;
       color: #888;
+      position: relative;
+    }
+
+    /* FOOTER SECRET CHEAT-CODE EN BAS À GAUCHE (FAIBLE OPACITÉ) */
+    .footer-secret-container {
+      position: absolute;
+      left: 15px;
+      bottom: 12px;
+      opacity: 0.15;
+      font-size: 0.7rem;
+      letter-spacing: 2px;
+      color: #aaa;
+      user-select: none;
+    }
+    
+    /* EFFET DE FLASH LUMINEUX DURANT LA PREMIÈRE SECONDE DE DÉBLOCAGE */
+    @keyframes flashUnlock {
+      0% {
+        box-shadow: 0 0 60px 30px #ffffff, 0 0 120px 60px #ff8800;
+        background-color: #ffffff;
+        border-color: #ffffff;
+      }
+      50% {
+        box-shadow: 0 0 40px 20px #ff0000, 0 0 80px 40px #ff8800;
+        background-color: #ff4400;
+      }
+      100% {
+        box-shadow: 0 0 20px rgba(255, 136, 0, 0.8);
+        background: linear-gradient(135deg, #ff0000, #cc0000);
+        border-color: #ff8800;
+      }
+    }
+
+    #hidden-minigame-btn {
+      display: none;
+      background: linear-gradient(135deg, #ff0000, #cc0000);
+      color: #fff;
+      text-decoration: none;
+      font-weight: 700;
+      padding: 12px 28px;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      text-transform: uppercase;
+      border: 2px solid #ff8800;
+      box-shadow: 0 0 20px rgba(255, 0, 0, 0.6);
+      transition: all 0.25s ease-in-out;
+    }
+
+    #hidden-minigame-btn:hover {
+      background: linear-gradient(135deg, #ff8800, #cc5500);
+      border-color: #ff0000;
+      color: #000;
+      box-shadow: 0 0 30px rgba(255, 136, 0, 0.9);
+      transform: translateY(-3px);
+    }
+
+    .unlocked-flash {
+      animation: flashUnlock 1s ease-out forwards;
     }
 
     /* --- ROSTER TCG STYLE --- */
@@ -1006,6 +1128,15 @@
         width: 100%;
         height: 150px;
       }
+      .footer-secret-container {
+        position: static;
+        margin-top: 10px;
+      }
+      footer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
     }
   </style>
 </head>
@@ -1016,7 +1147,7 @@
 <div id="welcome-popup">
   <div class="popup-box">
     <img src="images/ATW BLANC.png" alt="ATW Logo" class="popup-logo">
-    <h2 class="popup-title">Bienvenue sur le site d'ATW</h2>
+    <h2 class="popup-title">Bienvenue sur le site de la ATW</h2>
     <button class="btn-enter" onclick="closePopup()">Entrer</button>
   </div>
 </div>
@@ -1034,7 +1165,7 @@
       <div class="timer-block"><span id="t-secs">00</span><span class="timer-unit">sec</span></div>
     </div>
   </div>
-  <img src="images/ATW BLANC.png" alt="ATW Logo" class="hero-logo" id="logo-easter-egg">
+  <img src="images/ATW BLANC.png" alt="ATW Logo" class="hero-logo" id="logo-random-sound">
   <p class="hero-subtitle">Amateur Trampoline Wrestling</p>
   
   <nav class="nav-buttons">
@@ -1045,6 +1176,13 @@
     <a href="#galerie" class="btn-nav">Galerie</a>
     <a href="#news" class="btn-nav">News</a>
   </nav>
+
+  <!-- BOUTONS RÉSEAUX SOCIAUX (FOND ROUGE) -->
+  <div class="social-buttons">
+    <a href="URL_YOUTUBE" target="_blank" class="btn-social" title="YouTube"><img src="youtube.png" alt="YouTube"></a>
+    <a href="URL_INSTA" target="_blank" class="btn-social" title="Instagram"><img src="insta.png" alt="Instagram"></a>
+    <a href="URL_TIKTOK" target="_blank" class="btn-social" title="TikTok"><img src="tiktok.png" alt="TikTok"></a>
+  </div>
 </header>
 
 <!-- MENU FLOTTANT BAS DE PAGE -->
@@ -1572,7 +1710,7 @@
         <h3 class="news-title">Bounce Of Fury Reporté À 2026 !</h3>
         <p>Initialement prévu pour 2025, le Pay-Per-View majeur de l'ATW est officiellement repoussé à 2026. La direction promet un show historique pour compenser cette attente.</p>
       </div>
-      <img src="images/2025 to 2026.png" alt="News Image" class="news-image">
+      <img src="images/news1.png" alt="News Image" class="news-image">
     </div>
 
     <div class="news-card">
@@ -1581,7 +1719,16 @@
         <h3 class="news-title">Une Nouvelle Arène Dévoilée À Bounce Of Fury</h3>
         <p>C'est confirmé : l’ATW s'agrandit. Le lieu de combat officiel change d'échelle et sera présenté en exclusivité lors de Bounce Of Fury 2026.</p>
       </div>
-      <img src="images/new arena.png" alt="News Image" class="news-image">
+      <img src="images/news2.png" alt="News Image" class="news-image">
+    </div>
+
+    <div class="news-card">
+      <div class="news-content">
+        <div class="news-date">DEBAT</div>
+        <h3 class="news-title">L'ATW : Pire Fédé De L'Histoire Ou Génie Incompris ?</h3>
+        <p>Entre chaos en coulisses, rivalités explosives et gestion douteuse, les avis se déchirent. L'ATW continue de diviser mais reste impossible à ignorer.</p>
+      </div>
+      <img src="images/news3.png" alt="News Image" class="news-image">
     </div>
 
     <div class="news-card">
@@ -1590,12 +1737,16 @@
         <h3 class="news-title">Le Trailer De BOUNCE OF FURY 2026 Sort Bientôt !</h3>
         <p>En effet dès que le CPV est tourné, le trailer pourra être finalisé et sortir.</p>
       </div>
-      <img src="images/boflogo.png" alt="News Image" class="news-image">
+      <img src="images/news4.png" alt="News Image" class="news-image">
     </div>
   </div>
 </section>
 
 <footer>
+  <div class="footer-secret-container" id="secret-code-wrapper">
+    <span id="secret-arrows">▲ ▲ ▼ ▼ ◄ ► ◄ ► ▲ ▼</span>
+    <a href="minijeu.html" id="hidden-minigame-btn">MINI-JEU !</a>
+  </div>
   <p>ATW © 2026 — Amateur Trampoline Wrestling</p>
 </footer>
 
@@ -1607,6 +1758,55 @@
       popup.classList.add('hidden');
     }
   }
+
+  // Séquence cheat-code flèches
+  const secretCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'];
+  let userKeys = [];
+
+  window.addEventListener('keydown', (e) => {
+    if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
+      e.preventDefault(); // Empêche la page de bouger avec les flèches
+      
+      userKeys.push(e.key);
+      if (userKeys.length > secretCode.length) {
+        userKeys.shift();
+      }
+      if (userKeys.toString() === secretCode.toString()) {
+        const arrowsSpan = document.getElementById('secret-arrows');
+        const secretBtn = document.getElementById('hidden-minigame-btn');
+        const container = document.getElementById('secret-code-wrapper');
+        
+        if (arrowsSpan && secretBtn && container) {
+          arrowsSpan.style.display = 'none';
+          secretBtn.style.display = 'inline-block';
+          container.style.opacity = '1';
+          
+          // Déclenche l'effet de flash lumineux intense pendant 1 seconde
+          secretBtn.classList.add('unlocked-flash');
+          setTimeout(() => {
+            secretBtn.classList.remove('unlocked-flash');
+          }, 1000);
+          
+          // Petit son de débloquage
+          try {
+            const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(300, audioCtx.currentTime);
+            osc.frequency.setValueAtTime(600, audioCtx.currentTime + 0.1);
+            osc.frequency.setValueAtTime(900, audioCtx.currentTime + 0.2);
+            gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.4);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.4);
+          } catch(err) {}
+        }
+      }
+    }
+  });
 
   // Classe pour gérer un lecteur de musique complet
   class MusicPlayer {
@@ -1640,7 +1840,6 @@
     }
 
     play() {
-      // Coupe les autres lecteurs avant de lancer celui-ci
       for (let key in audioPlayers) {
         if (audioPlayers[key] !== this) {
           audioPlayers[key].pause();
@@ -1682,7 +1881,7 @@
     tgk: new MusicPlayer('sons/tgk-theme.mp3', 'tgk')
   };
 
-  // Fonction de woosh léger au survol (généré synthétiquement)
+  // Fonction de woosh léger au survol
   function playHoverWoosh() {
     try {
       const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -1701,9 +1900,9 @@
       filter.frequency.exponentialRampToValueAtTime(300, audioCtx.currentTime + 0.12);
       filter.Q.value = 2;
       const gain = audioCtx.createGain();
-      gain.gain.setValueAtTime(0.005, audioCtx.currentTime);
-      gain.gain.linearRampToValueAtTime(0.035, audioCtx.currentTime + 0.06);
-      gain.gain.linearRampToValueAtTime(0.001, audioCtx.currentTime + 0.12);
+      gain.gain.setValueAtTime(0.015, audioCtx.currentTime);
+      gain.gain.linearRampToValueAtTime(0.08, audioCtx.currentTime + 0.06);
+      gain.gain.linearRampToValueAtTime(0.002, audioCtx.currentTime + 0.12);
       noise.connect(filter);
       filter.connect(gain);
       gain.connect(audioCtx.destination);
@@ -1720,8 +1919,8 @@
       osc.type = 'sine';
       osc.frequency.setValueAtTime(450, audioCtx.currentTime);
       osc.frequency.exponentialRampToValueAtTime(120, audioCtx.currentTime + 0.08);
-      gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.08);
+      gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.002, audioCtx.currentTime + 0.08);
       osc.connect(gain);
       gain.connect(audioCtx.destination);
       osc.start();
@@ -1729,31 +1928,70 @@
     } catch (e) {}
   }
 
-  // Sons depuis le dossier 'sons'
-  function playCameraSound() {
-    const sound = new Audio('sons/photo.mp3');
-    sound.volume = 0.15;
+  let logoShakeToggle = false;
+
+  function playRandomLogoSound() {
+    const logoSounds = [
+      { src: 'sons/logo clicker/bug.mp3', volume: 0.6 },
+      { src: 'sons/logo clicker/cloche.mp3', volume: 0.6 },
+      { src: 'sons/logo clicker/intro.mp3', volume: 0.6 },
+      { src: 'sons/logo clicker/les bouncers se valent.mp3', volume: 0.6 },
+      { src: 'sons/logo clicker/AAAHH.mp3', volume: 0.6 },
+      { src: 'sons/logo clicker/autistic noise.mp3', volume: 1.5 },
+      { src: 'sons/logo clicker/dcd.mp3', volume: 1.5 },
+      { src: 'sons/logo clicker/europein.mp3', volume: 0.6 },
+      { src: 'sons/logo clicker/im going to.mp3', volume: 1.5 },
+      { src: 'sons/logo clicker/la claque.mp3', volume: 0.6 },
+      { src: 'sons/logo clicker/magic sword.mp3', volume: 0.6 },
+      { src: 'sons/logo clicker/mort enfait.mp3', volume: 1.5 },
+      { src: 'sons/logo clicker/regardez peter.mp3', volume: 0.6 },
+      { src: 'sons/logo clicker/wtf.mp3', volume: 1.5 }
+    ];
+
+    const randomIndex = Math.floor(Math.random() * logoSounds.length);
+    const selected = logoSounds[randomIndex];
+    
+    const sound = new Audio(selected.src);
+    sound.volume = selected.volume;
     sound.play().catch(e => {});
+
+    const bodyEl = document.body;
+    const logoEl = document.getElementById('logo-random-sound');
+
+    bodyEl.classList.remove('shake-page-x', 'shake-page-y');
+    logoEl.classList.remove('shake-logo-x', 'shake-logo-y');
+
+    void bodyEl.offsetWidth; 
+    void logoEl.offsetWidth;
+
+    if (!logoShakeToggle) {
+      bodyEl.classList.add('shake-page-x');
+      logoEl.classList.add('shake-logo-y');
+    } else {
+      bodyEl.classList.add('shake-page-y');
+      logoEl.classList.add('shake-logo-x');
+    }
+
+    logoShakeToggle = !logoShakeToggle;
+
+    setTimeout(() => {
+      bodyEl.classList.remove('shake-page-x', 'shake-page-y');
+      logoEl.classList.remove('shake-logo-x', 'shake-logo-y');
+    }, 400);
   }
 
-  function playDingDingDing() {
-    const sound = new Audio('sons/cloche.mp3');
-    sound.volume = 0.1;
-    sound.play().catch(e => {});
-  }
-
-  // Application des écouteurs sur tous les éléments interactifs
-  const interactiveElements = document.querySelectorAll('a, button:not(.player-btn), .tcg-card, .news-card, .gallery-item');
+  const interactiveElements = document.querySelectorAll('a, button:not(.player-btn):not(.btn-enter), .tcg-card, .news-card, .gallery-item');
   interactiveElements.forEach(element => {
     element.addEventListener('click', playClickPop);
     element.addEventListener('mouseenter', playHoverWoosh);
   });
 
-  // Son d'appareil photo sur les images de la galerie
   document.querySelectorAll('.gallery-item img').forEach(img => {
     img.addEventListener('click', (e) => {
       e.stopPropagation();
-      playCameraSound();
+      const sound = new Audio('sons/photo.mp3');
+      sound.volume = 0.15;
+      sound.play().catch(e => {});
       document.querySelectorAll('.gallery-item img').forEach(other => {
         if (other !== img) other.classList.remove('zoomed');
       });
@@ -1761,10 +1999,9 @@
     });
   });
 
-  // Easter egg : Son de cloche sur le logo
-  const logoEasterEgg = document.getElementById('logo-easter-egg');
-  if (logoEasterEgg) {
-    logoEasterEgg.addEventListener('click', playDingDingDing);
+  const logoRandomSound = document.getElementById('logo-random-sound');
+  if (logoRandomSound) {
+    logoRandomSound.addEventListener('click', playRandomLogoSound);
   }
 
   let showSpoilers = false;
@@ -1786,7 +2023,6 @@
     }
   }
 
-  // TIMER YOUTUBE
   function updateTimer() {
     const lastVideoDate = new Date('2025-09-13T20:00:00');
     const now = new Date();
